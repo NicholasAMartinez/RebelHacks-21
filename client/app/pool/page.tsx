@@ -201,6 +201,133 @@ export default function PoolPage() {
     });
   };
 
+  const handleRemoveItem = async (item: Item) => {
+    if (!currentUserId || item.ownerId !== currentUserId) {
+      return;
+    }
+
+    const confirmed = window.confirm(`Remove "${item.name}" from the gamble pool?`);
+    if (!confirmed) {
+      return;
+    }
+
+    const numericItemId = Number(item.id);
+    if (!Number.isFinite(numericItemId)) {
+      setNotice("Unable to remove item: invalid item id.");
+      window.setTimeout(() => setNotice(null), 3000);
+      return;
+    }
+
+    const supabase = createClient();
+    const { error } = await supabase
+      .from("items")
+      .delete()
+      .eq("item_id", numericItemId)
+      .eq("user_id", currentUserId);
+
+    if (error) {
+      setNotice(`Failed to remove item: ${error.message}`);
+      window.setTimeout(() => setNotice(null), 3500);
+      return;
+    }
+
+    setItems((previous) => previous.filter((existingItem) => String(existingItem.id) !== String(item.id)));
+    setSelectedItems((previous) =>
+      previous.filter((existingItem) => String(existingItem.id) !== String(item.id)),
+    );
+
+    if (result && String(result.id) === String(item.id)) {
+      setResult(null);
+      setShowResult(false);
+    }
+
+    setNotice("Item removed from gamble pool.");
+    window.setTimeout(() => setNotice(null), 3000);
+  };
+
+  const handleEditItem = async (item: Item) => {
+    if (!currentUserId || item.ownerId !== currentUserId) {
+      return;
+    }
+
+    const nextName = window.prompt("Edit item name:", item.name);
+    if (nextName === null) return;
+
+    const nextDescription = window.prompt("Edit item description:", item.description);
+    if (nextDescription === null) return;
+
+    const nextPriceInput = window.prompt("Edit item price:", String(item.price));
+    if (nextPriceInput === null) return;
+    const nextPrice = Number(nextPriceInput);
+
+    if (!nextName.trim()) {
+      setNotice("Item name cannot be empty.");
+      window.setTimeout(() => setNotice(null), 3000);
+      return;
+    }
+
+    if (!Number.isFinite(nextPrice) || nextPrice <= 0) {
+      setNotice("Price must be a positive number.");
+      window.setTimeout(() => setNotice(null), 3000);
+      return;
+    }
+
+    const numericItemId = Number(item.id);
+    if (!Number.isFinite(numericItemId)) {
+      setNotice("Unable to edit item: invalid item id.");
+      window.setTimeout(() => setNotice(null), 3000);
+      return;
+    }
+
+    const supabase = createClient();
+    const { data: updatedRow, error } = await supabase
+      .from("items")
+      .update({
+        name: nextName.trim(),
+        desc: nextDescription.trim(),
+        price: nextPrice,
+      })
+      .eq("item_id", numericItemId)
+      .eq("user_id", currentUserId)
+      .select("*")
+      .maybeSingle();
+
+    if (error) {
+      setNotice(`Failed to edit item: ${error.message}`);
+      window.setTimeout(() => setNotice(null), 3500);
+      return;
+    }
+
+    if (!updatedRow) {
+      setNotice("Item update failed.");
+      window.setTimeout(() => setNotice(null), 3000);
+      return;
+    }
+
+    const updatedItem = mapRowToItem({
+      ...updatedRow,
+      owner_name: item.ownerName,
+    });
+
+    setItems((previous) =>
+      previous.map((existingItem) =>
+        String(existingItem.id) === String(item.id) ? updatedItem : existingItem,
+      ),
+    );
+    setSelectedItems((previous) =>
+      previous.map((existingItem) =>
+        String(existingItem.id) === String(item.id) ? updatedItem : existingItem,
+      ),
+    );
+
+    if (result && String(result.id) === String(item.id)) {
+      setResult(updatedItem);
+    }
+
+    setNotice("Item updated.");
+    window.setTimeout(() => setNotice(null), 3000);
+  };
+
   const handleSpin = () => {
     if (selectedItems.length < 1) {
       return;
@@ -359,6 +486,12 @@ export default function PoolPage() {
                             selected={selectedItems.some((selectedItem) => selectedItem.id === item.id)}
                             showSelectButton
                             onSelect={handleSelectItem}
+                            showEditButton={!!currentUserId && item.ownerId === currentUserId}
+                            onEdit={handleEditItem}
+                            editDisabled={isSpinning}
+                            showRemoveButton={!!currentUserId && item.ownerId === currentUserId}
+                            onRemove={handleRemoveItem}
+                            removeDisabled={isSpinning}
                             disabled={disabled}
                           />
                         );
