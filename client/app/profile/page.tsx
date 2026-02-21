@@ -197,7 +197,7 @@ export default async function ProfilePage() {
                 href="/profile/items"
                 className="rounded-lg border border-zinc-600 bg-zinc-900 px-4 py-2 text-sm font-semibold text-white hover:border-zinc-400"
               >
-                My Items
+                All
               </Link>
               <Link
                 href="/profile/trades"
@@ -227,7 +227,12 @@ export default async function ProfilePage() {
           ) : (
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {myItems.map((item) => (
-                <ItemCard key={item.id} item={item} />
+                <ItemCard
+                  key={item.id}
+                  item={item}
+                  showEditButton
+                  editHref={`/profile/items/${item.id}/edit`}
+                />
               ))}
             </div>
           )}

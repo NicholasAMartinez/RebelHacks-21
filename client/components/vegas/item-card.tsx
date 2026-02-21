@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { Item } from "@/lib/vegas-data";
 
 type ItemCardProps = {
@@ -7,6 +8,7 @@ type ItemCardProps = {
   onSelect?: (item: Item) => void;
   showEditButton?: boolean;
   onEdit?: (item: Item) => void;
+  editHref?: string;
   editDisabled?: boolean;
   showRemoveButton?: boolean;
   onRemove?: (item: Item) => void;
@@ -22,6 +24,7 @@ export function ItemCard({
   onSelect,
   showEditButton = false,
   onEdit,
+  editHref,
   editDisabled = false,
   showRemoveButton = false,
   onRemove,
@@ -87,21 +90,35 @@ export function ItemCard({
               ) : null}
 
               {showEditButton ? (
-                <button
-                  type="button"
-                  onClick={() => {
-                    if (editDisabled) return;
-                    onEdit?.(item);
-                  }}
-                  disabled={editDisabled}
-                  className={`rounded-md px-3 py-1 text-sm font-semibold transition-colors ${
-                    editDisabled
-                      ? "cursor-not-allowed bg-zinc-700 text-zinc-200 opacity-60"
-                      : "bg-amber-300 text-black hover:bg-amber-200"
-                  }`}
-                >
-                  Edit
-                </button>
+                editHref ? (
+                  <Link
+                    href={editHref}
+                    className={`rounded-md px-3 py-1 text-sm font-semibold transition-colors ${
+                      editDisabled
+                        ? "pointer-events-none cursor-not-allowed bg-zinc-700 text-zinc-200 opacity-60"
+                        : "bg-amber-300 text-black hover:bg-amber-200"
+                    }`}
+                    aria-disabled={editDisabled}
+                  >
+                    Edit
+                  </Link>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (editDisabled) return;
+                      onEdit?.(item);
+                    }}
+                    disabled={editDisabled}
+                    className={`rounded-md px-3 py-1 text-sm font-semibold transition-colors ${
+                      editDisabled
+                        ? "cursor-not-allowed bg-zinc-700 text-zinc-200 opacity-60"
+                        : "bg-amber-300 text-black hover:bg-amber-200"
+                    }`}
+                  >
+                    Edit
+                  </button>
+                )
               ) : null}
 
               {showRemoveButton ? (
