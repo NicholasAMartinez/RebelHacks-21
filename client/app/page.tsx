@@ -23,36 +23,84 @@ export default async function Home() {
         }}
       >
         <div className="absolute inset-0 bg-black/65" />
-        <div className="relative mx-auto flex min-h-[26rem] w-full max-w-6xl flex-col items-center justify-center px-4 py-16 text-center sm:px-6">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-amber-300">
-            Vegas Community Swap
-          </p>
-          <h1 className="mt-4 text-4xl font-black tracking-tight text-white sm:text-5xl md:text-6xl">
-            Trade Smarter. Play Fair.
-          </h1>
-          <p className="mx-auto mt-5 max-w-2xl text-base text-zinc-200 sm:text-lg">
-            List stuff you no longer need, enter fair-value pools, and win items you
-            actually want.
-          </p>
-          <div className="mt-8 flex flex-wrap justify-center gap-3">
-            <Link
-              href="/marketplace"
-              className="rounded-lg bg-amber-300 px-6 py-3 font-semibold text-black hover:bg-amber-200"
-            >
-              Browse Items
-            </Link>
-            <Link
-              href="/pool"
-              className="rounded-lg border border-zinc-500 bg-zinc-900 px-6 py-3 font-semibold text-white hover:border-zinc-300"
-            >
-              Start Gambling
-            </Link>
-            <Link
-              href="/info"
-              className="rounded-lg border border-zinc-600 px-6 py-3 font-semibold text-zinc-200 hover:bg-white/5"
-            >
-              Learn More
-            </Link>
+        <div className="relative mx-auto grid min-h-[30rem] w-full max-w-6xl gap-8 px-4 py-14 sm:px-6 lg:grid-cols-[minmax(0,1fr)_360px] lg:items-center">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-amber-300">
+              Vegas Community Swap
+            </p>
+            <h1 className="mt-4 text-4xl font-black tracking-tight text-white sm:text-5xl md:text-6xl">
+              Play The Pool.
+              <br />
+              Win Better Gear.
+            </h1>
+            <p className="mt-5 max-w-2xl text-base text-zinc-200 sm:text-lg">
+              Like a sportsbook board, but for real items. Enter fair value tiers,
+              spin, and claim the winning pool.
+            </p>
+            <div className="mt-7 flex flex-wrap gap-2">
+              {["Live Pools 18", "Avg Pot $142", "Max Entries 6"].map((line) => (
+                <span
+                  key={line}
+                  className="rounded-full border border-zinc-500 bg-black/50 px-3 py-1 text-xs font-semibold text-zinc-100"
+                >
+                  {line}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <div className="rounded-2xl border border-zinc-700 bg-zinc-950/90 p-4 shadow-2xl shadow-black/40">
+            <p className="mb-3 text-xs font-semibold uppercase tracking-[0.16em] text-zinc-400">
+              Action Board
+            </p>
+            <div className="space-y-2">
+              <Link
+                href="/pool"
+                className="block rounded-lg bg-amber-300 px-4 py-3 text-center text-base font-extrabold text-black hover:bg-amber-200"
+              >
+                Enter Gamble Pool
+              </Link>
+              <div className="grid grid-cols-2 gap-2">
+                <Link
+                  href="/marketplace"
+                  className="rounded-lg border border-zinc-600 bg-zinc-900 px-3 py-2 text-center text-sm font-semibold text-zinc-100 hover:border-zinc-400"
+                >
+                  Browse Board
+                </Link>
+                <Link
+                  href="/profile/items/new"
+                  className="rounded-lg border border-red-500/70 bg-red-700 px-3 py-2 text-center text-sm font-semibold text-white hover:bg-red-600"
+                >
+                  List Item
+                </Link>
+              </div>
+              <Link
+                href="/info"
+                className="block rounded-lg border border-zinc-700 px-3 py-2 text-center text-sm font-semibold text-zinc-300 hover:bg-white/5"
+              >
+                Rules and Safety
+              </Link>
+            </div>
+
+            <div className="mt-4 rounded-lg border border-zinc-800 bg-zinc-900 p-3">
+              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-zinc-500">
+                Current Lines
+              </p>
+              <div className="mt-2 space-y-1.5 text-sm">
+                <p className="flex items-center justify-between text-zinc-200">
+                  <span>$25 - $50 Tier</span>
+                  <span className="font-bold text-emerald-300">Hot</span>
+                </p>
+                <p className="flex items-center justify-between text-zinc-300">
+                  <span>$75 - $100 Tier</span>
+                  <span className="font-semibold text-zinc-200">Filling</span>
+                </p>
+                <p className="flex items-center justify-between text-zinc-300">
+                  <span>$100 - $250 Tier</span>
+                  <span className="font-semibold text-zinc-200">Open</span>
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
