@@ -1,4 +1,6 @@
-# RebelHacks-21
+# Potzi
+
+For the easiest experince just go to the website where it is hosted: https://www.potzi.vegas/
 
 Full-stack trading demo built with a Next.js client and an Express server.
 
@@ -116,7 +118,10 @@ Suggested files:
 Example embed format:
 
 ```md
-![Home screen](docs/screenshots/home.png)
-![Profile screen](docs/screenshots/profile.png)
-![Trades screen](docs/screenshots/trades.png)
+<img width="1249" height="1108" alt="image" src="https://github.com/user-attachments/assets/0e918c27-c01d-4753-ae2a-c511395000ee" />
+
+<img width="1189" height="779" alt="image" src="https://github.com/user-attachments/assets/e5b1f434-6070-43d0-8d8b-5ba5805429db" />
+
+<img width="1159" height="1061" alt="image" src="https://github.com/user-attachments/assets/60a956b1-3cdc-498c-a4ef-e2e9e0f8c110" />
+
 ```
