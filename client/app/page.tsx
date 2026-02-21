@@ -39,6 +39,12 @@ export default function Home() {
             >
               Start Gambling
             </Link>
+            <Link
+              href="/info"
+              className="rounded-lg border border-yellow-400 px-8 py-3 font-semibold text-yellow-400 transition-colors hover:bg-yellow-400 hover:text-black"
+            >
+              Learn More
+            </Link>
           </div>
         </div>
       </section>
