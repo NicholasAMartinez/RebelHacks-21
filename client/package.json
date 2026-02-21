@@ -13,11 +13,9 @@
     "@supabase/supabase-js": "^2.97.0",
     "express": "^5.2.1",
     "next": "16.1.6",
-    "node": "^25.6.1",
     "nodemon": "^3.1.14",
     "react": "19.2.3",
-    "react-dom": "19.2.3",
-    "supabase": "^2.76.12"
+    "react-dom": "19.2.3"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
