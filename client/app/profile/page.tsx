@@ -55,10 +55,13 @@ export default async function ProfilePage() {
   const totalBets = profile?.totalBets ?? 0;
   const initials = displayName.slice(0, 2).toUpperCase();
 
-  const { data: itemRows } = await supabase.from("items").select("*");
-  const previewItem = (itemRows ?? [])
-    .map((row) => mapRowToItem(row))
-    .find((item) => item.ownerId === user.id || item.ownerName === displayName);
+  const { data: itemRows } = await supabase
+    .from("items")
+    .select("*")
+    .eq("user_id", user.id)
+    .order("item_id", { ascending: false })
+    .limit(1);
+  const previewItem = (itemRows ?? []).map((row) => mapRowToItem(row))[0];
 
   return (
     <div className="min-h-screen bg-slate-950 text-zinc-100">
@@ -152,6 +155,36 @@ export default async function ProfilePage() {
               )}
             </div>
           </div>
+
+          <div className="mt-8 flex flex-wrap gap-3">
+            <Link
+              href="/profile/items"
+              className="rounded-lg bg-yellow-400 px-6 py-3 font-semibold text-black transition-colors hover:bg-yellow-300"
+            >
+              My Items
+            </Link>
+            <Link
+              href="/profile/won"
+              className="rounded-lg bg-emerald-600 px-6 py-3 font-semibold text-white transition-colors hover:bg-emerald-500"
+            >
+              Won Items
+            </Link>
+            <Link
+              href="/profile/items/new"
+              className="rounded-lg bg-red-700 px-6 py-3 font-semibold text-white transition-colors hover:bg-red-600"
+            >
+              Add Item
+            </Link>
+          </div>
+
+          <form action={signOut} className="mt-8">
+            <button
+              type="submit"
+              className="rounded-lg bg-red-700 px-6 py-3 font-semibold text-white transition-colors hover:bg-red-600"
+            >
+              Sign out
+            </button>
+          </form>
         </section>
       </main>
     </div>

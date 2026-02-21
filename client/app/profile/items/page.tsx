@@ -23,6 +23,7 @@ export default async function MyItemsPage() {
     .maybeSingle();
 
   const displayName = profile?.name || fallbackUsername;
+
   const { data: itemRows } = await supabase.from("items").select("*");
   const myItems = (itemRows ?? [])
     .map((row) => mapRowToItem(row))
@@ -32,6 +33,14 @@ export default async function MyItemsPage() {
         item.ownerName === displayName ||
         item.ownerName === "You",
     );
+
+  const { data: itemRows } = await supabase
+    .from("items")
+    .select("*")
+    .eq("user_id", user.id)
+    .order("item_id", { ascending: false });
+  const myItems = (itemRows ?? []).map((row) => mapRowToItem(row));
+
 
   return (
     <div className="min-h-screen bg-slate-950 text-zinc-100">
