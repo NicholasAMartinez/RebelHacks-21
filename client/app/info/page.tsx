@@ -54,16 +54,16 @@ export default function InfoPage() {
               </p>
               <div className="grid gap-3">
                 <div className="rounded-md border border-zinc-700 bg-slate-950 p-3 text-zinc-200">
-                  <strong className="text-amber-300">Low</strong>: under 49 coins
+                  <strong className="text-amber-300">Low</strong>: under $49
                 </div>
                 <div className="rounded-md border border-zinc-700 bg-slate-950 p-3 text-zinc-200">
-                  <strong className="text-amber-300">Medium</strong>: 50-99 coins
+                  <strong className="text-amber-300">Medium</strong>: $50-$99
                 </div>
                 <div className="rounded-md border border-zinc-700 bg-slate-950 p-3 text-zinc-200">
-                  <strong className="text-amber-300">High</strong>: 100-149 coins
+                  <strong className="text-amber-300">High</strong>: $100-$149
                 </div>
                 <div className="rounded-md border border-zinc-700 bg-slate-950 p-3 text-zinc-200">
-                  <strong className="text-amber-300">Premium</strong>: over 150 coins
+                  <strong className="text-amber-300">Premium</strong>: over $150
                 </div>
               </div>
             </article>

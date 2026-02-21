@@ -77,7 +77,7 @@ export function RouletteWheel({
                       dominantBaseline="middle"
                       style={{ userSelect: "none" }}
                     >
-                      🪙{item.price}
+                      ${item.price}
                     </text>
                   </g>
                 );

@@ -32,6 +32,20 @@ type SpinResponse = {
   spinProof?: string;
 };
 
+type SpinProofVerification = {
+  requesterItemId: number;
+  winnerItemId: number;
+  candidateCount: number;
+  issuedAt: number;
+  expiresAt: number;
+};
+
+type SpinVerifyResponse = {
+  ok?: boolean;
+  error?: string;
+  verification?: SpinProofVerification;
+};
+
 const POOL_ITEMS_CACHE_KEY = "potzi.pool.items.v3";
 const POOL_ITEMS_CACHE_TTL_MS = 5 * 60 * 1000;
 
@@ -99,6 +113,11 @@ export default function PoolPage() {
   const [notice, setNotice] = useState<string | null>(null);
   const [currentUserId, setCurrentUserId] = useState<string | null>(null);
   const [createdTradeId, setCreatedTradeId] = useState<number | null>(null);
+  const [spinProofSummary, setSpinProofSummary] = useState<{
+    proofId: string;
+    verification: SpinProofVerification | null;
+    error: string | null;
+  } | null>(null);
 
   useEffect(() => {
     const supabase = createClient();
@@ -291,6 +310,7 @@ export default function PoolPage() {
     setShowResult(false);
     setResult(null);
     setCreatedTradeId(null);
+    setSpinProofSummary(null);
 
     let winner: Item | undefined;
     let targetAngle = 0;
@@ -374,6 +394,42 @@ export default function PoolPage() {
       setIsSpinning(false);
       setShowResult(true);
       void createTradeRequest(selectedItemSnapshot, winner, spinProof);
+      void (async () => {
+        const proofId = spinProof.slice(0, 16);
+        try {
+          const verifyResponse = await fetch("/api/pool/verify", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              requesterItemId: selectedItemSnapshot.id,
+              recipientItemId: winner.id,
+              spinProof,
+            }),
+          });
+          const payload = (await verifyResponse.json().catch(() => ({}))) as SpinVerifyResponse;
+          if (!verifyResponse.ok || !payload.ok || !payload.verification) {
+            setSpinProofSummary({
+              proofId,
+              verification: null,
+              error: payload.error || "Verification failed.",
+            });
+            return;
+          }
+          setSpinProofSummary({
+            proofId,
+            verification: payload.verification,
+            error: null,
+          });
+        } catch {
+          setSpinProofSummary({
+            proofId,
+            verification: null,
+            error: "Verification request failed.",
+          });
+        }
+      })();
     }, durationMs);
   };
 
@@ -385,6 +441,7 @@ export default function PoolPage() {
     setSpinAngle(0);
     setCreatedTradeId(null);
     setNotice(null);
+    setSpinProofSummary(null);
   };
 
   const handleRemoveItem = async (item: Item) => {
@@ -513,6 +570,33 @@ export default function PoolPage() {
                       </p>
                     ) : null}
                   </div>
+
+                  {spinProofSummary ? (
+                    <div className={`mx-auto mt-5 max-w-3xl rounded-lg border p-4 text-left ${
+                      spinProofSummary.error
+                        ? "border-red-500/60 bg-red-950/30"
+                        : "border-emerald-500/60 bg-emerald-950/30"
+                    }`}>
+                      <p className="text-xs font-semibold uppercase tracking-[0.14em] text-zinc-300">
+                        Fair Spin Proof
+                      </p>
+                      <p className="mt-1 text-sm text-zinc-200">
+                        Proof ID: <span className="font-mono text-amber-200">{spinProofSummary.proofId}</span>
+                      </p>
+                      {spinProofSummary.error ? (
+                        <p className="mt-2 text-sm text-red-200">
+                          Verification failed: {spinProofSummary.error}
+                        </p>
+                      ) : spinProofSummary.verification ? (
+                        <div className="mt-2 space-y-1 text-sm text-zinc-200">
+                          <p>Verifier: Signature valid and winner matched candidate set.</p>
+                          <p>Candidates in bracket: {spinProofSummary.verification.candidateCount}</p>
+                          <p>Issued: {new Date(spinProofSummary.verification.issuedAt).toLocaleTimeString()}</p>
+                          <p>Expires: {new Date(spinProofSummary.verification.expiresAt).toLocaleTimeString()}</p>
+                        </div>
+                      ) : null}
+                    </div>
+                  ) : null}
                 </div>
               </div>
             ) : null}
@@ -574,7 +658,7 @@ export default function PoolPage() {
             </p>
             {rouletteCandidates.length === 0 ? (
               <p className="rounded-lg border border-dashed border-zinc-700 bg-slate-950 p-4 text-sm text-zinc-400">
-                No other users currently have items in this value bracket.
+              No other users currently have items in this value bracket.
               </p>
             ) : (
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">

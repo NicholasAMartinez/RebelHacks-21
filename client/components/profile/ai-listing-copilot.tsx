@@ -96,7 +96,7 @@ export function AiListingCopilot({ className = "" }: CopilotProps) {
         <div>
           <h2 className="text-lg font-semibold text-emerald-300">AI Listing Copilot</h2>
           <p className="mt-1 text-sm text-zinc-300">
-            Suggests clearer copy, fair coin range, and safety flags before you submit.
+            Suggests clearer copy, fair price range, and safety flags before you submit.
           </p>
         </div>
         <button
@@ -147,9 +147,9 @@ export function AiListingCopilot({ className = "" }: CopilotProps) {
           </p>
           <p className="mt-2 text-sm text-zinc-300">{suggestion.improvedDescription}</p>
           <p className="mt-3 text-sm text-zinc-200">
-            Value range: <span className="font-semibold text-amber-300">{suggestion.estimatedMinCoins} - {suggestion.estimatedMaxCoins} coins</span>
+            Value range: <span className="font-semibold text-amber-300">${suggestion.estimatedMinCoins} - ${suggestion.estimatedMaxCoins}</span>
             {" · "}
-            Recommended: <span className="font-semibold text-amber-200">{suggestion.recommendedCoins}</span>
+            Recommended: <span className="font-semibold text-amber-200">${suggestion.recommendedCoins}</span>
           </p>
           <p className="mt-1 text-xs text-zinc-400">
             Category: {suggestion.suggestedCategory} · Condition: {suggestion.suggestedCondition}

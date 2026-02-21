@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { VegasHeader } from "@/components/vegas/header";
 import { FeaturedItemsSection } from "@/components/vegas/featured-items-section";
+import { ImpactStatsStrip } from "@/components/vegas/impact-stats-strip";
 
 export default async function Home() {
   return (
@@ -34,11 +35,11 @@ export default async function Home() {
               Win Better Gear.
             </h1>
             <p className="mt-5 max-w-2xl text-base text-zinc-200 sm:text-lg">
-              Like a sportsbook board, but with virtual-coin item tiers. Enter a
-              fair coin bracket, spin, and claim the winning pool.
+              Like a sportsbook board, but for local item value tiers. Enter a
+              fair value bracket, spin, and claim a matched trade.
             </p>
             <div className="mt-7 flex flex-wrap gap-2">
-              {["Live Pools 18", "Avg Pot 🪙 142", "Max Entries 6"].map((line) => (
+              {["Live Pools 18", "Avg Pot $142", "Max Entries 6"].map((line) => (
                 <span
                   key={line}
                   className="rounded-full border border-zinc-500 bg-black/50 px-3 py-1 text-xs font-semibold text-zinc-100"
@@ -88,15 +89,15 @@ export default async function Home() {
               </p>
               <div className="mt-2 space-y-1.5 text-sm">
                 <p className="flex items-center justify-between text-zinc-200">
-                  <span>🪙 25-50 coins Tier</span>
+                  <span>$25-$50 Tier</span>
                   <span className="font-bold text-emerald-300">Hot</span>
                 </p>
                 <p className="flex items-center justify-between text-zinc-300">
-                  <span>🪙 75-100 coins Tier</span>
+                  <span>$75-$100 Tier</span>
                   <span className="font-semibold text-zinc-200">Filling</span>
                 </p>
                 <p className="flex items-center justify-between text-zinc-300">
-                  <span>🪙 100-250 coins Tier</span>
+                  <span>$100-$250 Tier</span>
                   <span className="font-semibold text-zinc-200">Open</span>
                 </p>
               </div>
@@ -104,6 +105,8 @@ export default async function Home() {
           </div>
         </div>
       </section>
+
+      <ImpactStatsStrip />
 
       <section className="border-b border-white/10 px-4 py-16 sm:px-6">
         <div className="mx-auto max-w-6xl">

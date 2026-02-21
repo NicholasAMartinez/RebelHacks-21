@@ -173,7 +173,7 @@ app.post("/ai/listing-assist", async (req, res) => {
   }
 
   const prompt = [
-    "You are an item-listing assistant for a Las Vegas local swap app using virtual coin values.",
+    "You are an item-listing assistant for a Las Vegas local swap app using estimated USD values.",
     "Return STRICT JSON only. No markdown.",
     "JSON schema:",
     "{",
@@ -188,7 +188,7 @@ app.post("/ai/listing-assist", async (req, res) => {
     '  "safetyNote": string',
     "}",
     "Rules:",
-    "- recommendedCoins, estimatedMinCoins, estimatedMaxCoins must be positive integers.",
+    "- recommendedCoins, estimatedMinCoins, estimatedMaxCoins represent whole-dollar estimates and must be positive integers.",
     "- Ensure estimatedMinCoins <= recommendedCoins <= estimatedMaxCoins.",
     "- riskFlags should be short and practical.",
     "- Keep improvedDescription concise and factual.",
