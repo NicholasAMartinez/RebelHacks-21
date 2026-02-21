@@ -210,6 +210,12 @@ export async function POST(req: Request) {
   });
 
   if (!spinProofResult.ok) {
+    if (spinProofResult.error.includes("SPIN_PROOF_SECRET is not configured")) {
+      return errorResponse(
+        "Trade verification is not configured on this app server. Set SPIN_PROOF_SECRET and redeploy.",
+        503,
+      );
+    }
     return errorResponse(`Invalid spin proof: ${spinProofResult.error}`, 403);
   }
 

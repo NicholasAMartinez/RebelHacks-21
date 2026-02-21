@@ -35,6 +35,12 @@ export async function POST(req: Request) {
   });
 
   if (!result.ok) {
+    if (result.error.includes("SPIN_PROOF_SECRET is not configured")) {
+      return NextResponse.json(
+        { ok: false, error: "SPIN_PROOF_SECRET is not configured on the app server." },
+        { status: 503 },
+      );
+    }
     return NextResponse.json({ ok: false, error: result.error }, { status: 403 });
   }
 

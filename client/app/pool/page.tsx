@@ -54,6 +54,12 @@ type PoolItemsCachePayload = {
   items: Item[];
 };
 
+function isSpinProofVerifierUnavailable(error: string | undefined) {
+  if (!error) return false;
+  const normalized = error.toLowerCase();
+  return normalized.includes("spin_proof_secret") && normalized.includes("not configured");
+}
+
 function normalizeAngle(value: number) {
   const normalized = value % 360;
   return normalized < 0 ? normalized + 360 : normalized;
@@ -117,6 +123,7 @@ export default function PoolPage() {
     proofId: string;
     verification: SpinProofVerification | null;
     error: string | null;
+    unavailable?: boolean;
   } | null>(null);
 
   useEffect(() => {
@@ -410,6 +417,15 @@ export default function PoolPage() {
           });
           const payload = (await verifyResponse.json().catch(() => ({}))) as SpinVerifyResponse;
           if (!verifyResponse.ok || !payload.ok || !payload.verification) {
+            if (isSpinProofVerifierUnavailable(payload.error)) {
+              setSpinProofSummary({
+                proofId,
+                verification: null,
+                error: null,
+                unavailable: true,
+              });
+              return;
+            }
             setSpinProofSummary({
               proofId,
               verification: null,
@@ -421,6 +437,7 @@ export default function PoolPage() {
             proofId,
             verification: payload.verification,
             error: null,
+            unavailable: false,
           });
         } catch {
           setSpinProofSummary({
@@ -575,6 +592,8 @@ export default function PoolPage() {
                     <div className={`mx-auto mt-5 max-w-3xl rounded-lg border p-4 text-left ${
                       spinProofSummary.error
                         ? "border-red-500/60 bg-red-950/30"
+                        : spinProofSummary.unavailable
+                        ? "border-amber-500/60 bg-amber-950/30"
                         : "border-emerald-500/60 bg-emerald-950/30"
                     }`}>
                       <p className="text-xs font-semibold uppercase tracking-[0.14em] text-zinc-300">
@@ -586,6 +605,10 @@ export default function PoolPage() {
                       {spinProofSummary.error ? (
                         <p className="mt-2 text-sm text-red-200">
                           Verification failed: {spinProofSummary.error}
+                        </p>
+                      ) : spinProofSummary.unavailable ? (
+                        <p className="mt-2 text-sm text-amber-100">
+                          Verification unavailable on this deployment.
                         </p>
                       ) : spinProofSummary.verification ? (
                         <div className="mt-2 space-y-1 text-sm text-zinc-200">
