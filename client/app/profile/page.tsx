@@ -118,30 +118,24 @@ export default async function ProfilePage() {
     (wonItemRows ?? []).map((row) => [String(row.item_id ?? ""), row]),
   );
 
-  const wonItems = receivedRows.map((row) => {
-    const senderName = row.sender_id ? (senderNameById.get(row.sender_id) ?? "Player") : "Player";
-    const itemRow =
-      itemById.get(String(row.item_id)) ?? {
-        item_id: row.item_id,
-        name: "Unknown Item",
-        desc: "This item is no longer available.",
-        price: 0,
-        url: "/file.svg",
-        category: "Misc",
-        condition: "Good",
-        user_id: row.sender_id ?? "",
-      };
+  const wonItems = receivedRows.flatMap((row) => {
+    const itemRow = itemById.get(String(row.item_id));
+    if (!itemRow) return [];
 
-    return {
-      receivedId: row.received_id,
-      receivedAt: row.received_at,
-      note: row.note,
-      senderName,
-      item: mapRowToItem({
-        ...itemRow,
-        owner_name: senderName,
-      }),
-    };
+    const senderName = row.sender_id ? (senderNameById.get(row.sender_id) ?? "Player") : "Player";
+
+    return [
+      {
+        receivedId: row.received_id,
+        receivedAt: row.received_at,
+        note: row.note,
+        senderName,
+        item: mapRowToItem({
+          ...itemRow,
+          owner_name: senderName,
+        }),
+      },
+    ];
   });
 
   return (
@@ -193,7 +187,9 @@ export default async function ProfilePage() {
           <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
             <div>
               <h2 className="text-lg font-semibold text-white sm:text-xl">My Item Cards</h2>
-              <p className="mt-1 text-sm text-zinc-400">All items currently listed by you.</p>
+              <p className="mt-1 text-sm text-zinc-400">
+                All items you currently own (posted by you or won in trades/spins).
+              </p>
             </div>
             <div className="flex flex-wrap gap-2">
               <Link
