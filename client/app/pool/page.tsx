@@ -29,6 +29,7 @@ type SpinResponse = {
   targetAngle?: number;
   extraTurns?: number;
   durationMs?: number;
+  spinProof?: string;
 };
 
 const POOL_ITEMS_CACHE_KEY = "potzi.pool.items.v3";
@@ -251,7 +252,7 @@ export default function PoolPage() {
     });
   };
 
-  const createTradeRequest = async (myItem: Item, landedItem: Item) => {
+  const createTradeRequest = async (myItem: Item, landedItem: Item, spinProof: string) => {
     const response = await fetch("/api/trades", {
       method: "POST",
       headers: {
@@ -260,6 +261,7 @@ export default function PoolPage() {
       body: JSON.stringify({
         requesterItemId: myItem.id,
         recipientItemId: landedItem.id,
+        spinProof,
       }),
     });
 
@@ -294,6 +296,7 @@ export default function PoolPage() {
     let targetAngle = 0;
     let extraTurns = 0;
     let durationMs = 0;
+    let spinProof = "";
 
     try {
       const spinResponse = await fetch("/api/pool/spin", {
@@ -320,6 +323,7 @@ export default function PoolPage() {
       targetAngle = Number(spinPayload.targetAngle);
       extraTurns = Number(spinPayload.extraTurns);
       durationMs = Number(spinPayload.durationMs);
+      spinProof = typeof spinPayload.spinProof === "string" ? spinPayload.spinProof.trim() : "";
     } catch {
       setIsSpinning(false);
       setNotice("Could not run spin. Check your connection and try again.");
@@ -331,7 +335,8 @@ export default function PoolPage() {
       !winner ||
       !Number.isFinite(targetAngle) ||
       !Number.isFinite(extraTurns) ||
-      !Number.isFinite(durationMs)
+      !Number.isFinite(durationMs) ||
+      !spinProof
     ) {
       setIsSpinning(false);
       setNotice("Spin result became stale. Refresh and try again.");
@@ -351,7 +356,7 @@ export default function PoolPage() {
       setResult(winner);
       setIsSpinning(false);
       setShowResult(true);
-      void createTradeRequest(selectedItemSnapshot, winner);
+      void createTradeRequest(selectedItemSnapshot, winner, spinProof);
     }, durationMs);
   };
 

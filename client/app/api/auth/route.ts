@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { getOnboardedState, ONBOARDED_COOKIE } from "@/lib/onboarding";
 import { createClient } from "@/lib/supabase/server";
 
 type AuthMode = "login" | "register";
@@ -54,7 +55,7 @@ export async function POST(req: Request) {
 
   const suppliedName = (body.name ?? body.username ?? "").trim();
   const normalizedName = normalizeDisplayName(suppliedName);
-  if (!normalizedName || normalizedName.length < 3) {
+  if (body.mode === "register" && (!normalizedName || normalizedName.length < 3)) {
     return NextResponse.json(
       { error: "Username must be at least 3 valid characters." },
       { status: 400 },
@@ -83,18 +84,24 @@ export async function POST(req: Request) {
       if (profileReadError) {
         console.error("[auth] profile read failed on login", profileReadError);
       } else if (existingProfile) {
-        const { error: profileUpdateError } = await supabase
-          .from("profiles")
-          .update({ name: normalizedName })
-          .eq("id", user.id);
+        if (normalizedName && normalizedName.length >= 3) {
+          const { error: profileUpdateError } = await supabase
+            .from("profiles")
+            .update({ name: normalizedName })
+            .eq("id", user.id);
 
-        if (profileUpdateError) {
-          console.error("[auth] profile update failed on login", profileUpdateError);
+          if (profileUpdateError) {
+            console.error("[auth] profile update failed on login", profileUpdateError);
+          }
         }
       } else {
+        const fallbackName =
+          (normalizedName && normalizedName.length >= 3
+            ? normalizedName
+            : normalizeDisplayName(user.user_metadata?.name || user.email?.split("@")[0] || "Player")) || "Player";
         const { error: profileInsertError } = await supabase.from("profiles").insert({
           id: user.id,
-          name: normalizedName,
+          name: fallbackName,
           wins: 0,
           totalBets: 0,
         });
@@ -105,7 +112,25 @@ export async function POST(req: Request) {
       }
     }
 
-    return NextResponse.json({ ok: true, message: "Logged in.", redirectTo: "/profile" });
+    const onboarding = await getOnboardedState(supabase, user.id);
+    const onboarded = onboarding.error ? false : onboarding.onboarded;
+    const response = NextResponse.json({
+      ok: true,
+      message: "Logged in.",
+      redirectTo: onboarded ? "/profile" : "/onboarding",
+    });
+    if (onboarded) {
+      response.cookies.set(ONBOARDED_COOKIE, "1", {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "lax",
+        path: "/",
+        maxAge: 60 * 60 * 24 * 365,
+      });
+    } else {
+      response.cookies.delete(ONBOARDED_COOKIE);
+    }
+    return response;
   }
 
   const name = normalizedName;
@@ -146,12 +171,13 @@ export async function POST(req: Request) {
       console.error("[auth] profile upsert failed on register", profileError);
     }
 
-    return NextResponse.json({
+    const response = NextResponse.json({
       ok: true,
       message: "Account created.",
-      // Show client-only onboarding immediately after a successful signup/session
       redirectTo: "/onboarding",
     });
+    response.cookies.delete(ONBOARDED_COOKIE);
+    return response;
   }
 
   return NextResponse.json({
@@ -169,5 +195,7 @@ export async function DELETE() {
     return NextResponse.json({ error: error.message }, { status: 400 });
   }
 
-  return NextResponse.json({ ok: true, message: "Signed out." });
+  const response = NextResponse.json({ ok: true, message: "Signed out." });
+  response.cookies.delete(ONBOARDED_COOKIE);
+  return response;
 }

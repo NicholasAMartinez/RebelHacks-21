@@ -34,6 +34,20 @@ NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=your-publishable-key
 ```
 
 The server does not require any special environment variables by default. It listens on `PORT` (defaults to `3001`).
+For secure spin validation, configure the same `SPIN_PROOF_SECRET` value in both:
+
+- `server/.env` (used to sign `/pool/spin` responses)
+- `client/.env.local` (used by `POST /api/trades` to verify proof)
+
+```env
+SPIN_PROOF_SECRET=replace-with-a-long-random-secret
+```
+
+For onboarding and trade settlement DB behavior, run:
+
+- `client/supabase/onboarding.sql`
+- `client/supabase/profiles-rls.sql`
+- `client/supabase/trades-rls.sql`
 
 ## Run locally (development)
 

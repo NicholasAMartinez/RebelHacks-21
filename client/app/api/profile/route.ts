@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { getOnboardedState } from "@/lib/onboarding";
 import { createClient } from "@/lib/supabase/server";
 
 type ProfileBackendPayload = {
@@ -34,6 +35,14 @@ export async function GET() {
     return errorResponse("Unauthorized.", 401);
   }
 
+  const onboarding = await getOnboardedState(supabase, user.id);
+  if (onboarding.error) {
+    return errorResponse(onboarding.error, 500);
+  }
+  if (!onboarding.onboarded) {
+    return errorResponse("Complete onboarding before viewing profile data.", 403);
+  }
+
   const { data, error } = await supabase.rpc("get_my_profile_backend");
 
   if (error) {
@@ -59,6 +68,14 @@ export async function PATCH(req: Request) {
 
   if (authError || !user) {
     return errorResponse("Unauthorized.", 401);
+  }
+
+  const onboarding = await getOnboardedState(supabase, user.id);
+  if (onboarding.error) {
+    return errorResponse(onboarding.error, 500);
+  }
+  if (!onboarding.onboarded) {
+    return errorResponse("Complete onboarding before updating profile.", 403);
   }
 
   const body = (await req.json().catch(() => null)) as ProfilePatchBody | null;

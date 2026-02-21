@@ -14,15 +14,20 @@ alter table public.profiles
   alter column wins set default 0,
   alter column "totalBets" set default 0;
 
+alter table public.profiles
+  add column if not exists onboarded boolean not null default false;
+
 update public.profiles
 set
   name = coalesce(nullif(trim(name), ''), 'Player ' || left(id::text, 8)),
   wins = coalesce(wins, 0),
-  "totalBets" = coalesce("totalBets", 0)
+  "totalBets" = coalesce("totalBets", 0),
+  onboarded = coalesce(onboarded, false)
 where name is null
   or trim(name) = ''
   or wins is null
-  or "totalBets" is null;
+  or "totalBets" is null
+  or onboarded is null;
 
 drop policy if exists "profiles_select_own" on public.profiles;
 drop policy if exists "profiles_insert_own" on public.profiles;
@@ -146,8 +151,8 @@ begin
       errcode = '22023';
   end if;
 
-  insert into public.profiles (id, name, wins, "totalBets")
-  values (current_user_id, cleaned_name, 0, 0)
+  insert into public.profiles (id, name, wins, "totalBets", onboarded)
+  values (current_user_id, cleaned_name, 0, 0, false)
   on conflict (id)
   do update
     set name = excluded.name
@@ -271,7 +276,7 @@ security invoker
 set search_path = public
 as $$
 with me as (
-  select p.id, p.avatar_url, p.name, p.wins, p."totalBets"
+  select p.id, p.avatar_url, p.name, p.wins, p."totalBets", p.onboarded
   from public.profiles p
   where p.id = auth.uid()
 )
@@ -284,7 +289,8 @@ select coalesce(
         'avatar_url', me.avatar_url,
         'name', me.name,
         'wins', me.wins,
-        'totalBets', me."totalBets"
+        'totalBets', me."totalBets",
+        'onboarded', me.onboarded
       ),
       'postedItems',
       coalesce(

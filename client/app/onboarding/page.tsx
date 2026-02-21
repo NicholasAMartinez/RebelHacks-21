@@ -14,9 +14,11 @@ export default function OnboardingPage() {
     setLoading(true);
     setError(null);
     try {
-      // Client-only acceptance: store locally and proceed. Do not call server DB.
-      if (typeof window !== "undefined") {
-        localStorage.setItem("onboarded", "true");
+      const response = await fetch("/api/onboarding", { method: "POST" });
+      const payload = (await response.json().catch(() => ({}))) as { error?: string };
+      if (!response.ok) {
+        setError(payload.error || "Could not save onboarding state.");
+        return;
       }
       router.replace("/profile");
     } catch (e: any) {
@@ -76,6 +78,29 @@ export default function OnboardingPage() {
       window.removeEventListener("popstate", onPopState);
     };
   }, []);
+
+  useEffect(() => {
+    let active = true;
+
+    const checkOnboarding = async () => {
+      try {
+        const response = await fetch("/api/onboarding", { cache: "no-store" });
+        const payload = (await response.json().catch(() => ({}))) as { onboarded?: boolean };
+        if (!active) return;
+        if (response.ok && payload.onboarded) {
+          router.replace("/profile");
+        }
+      } catch {
+        // Keep user on onboarding page when check fails.
+      }
+    };
+
+    void checkOnboarding();
+
+    return () => {
+      active = false;
+    };
+  }, [router]);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-red-900 via-black to-red-900 text-white">

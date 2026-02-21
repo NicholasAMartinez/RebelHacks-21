@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { getOnboardedState } from "@/lib/onboarding";
 import { createClient } from "@/lib/supabase/server";
 
 type TradeRow = {
@@ -39,6 +40,14 @@ export async function PATCH(
 
   if (authError || !user) {
     return errorResponse("Unauthorized.", 401);
+  }
+
+  const onboarding = await getOnboardedState(supabase, user.id);
+  if (onboarding.error) {
+    return errorResponse(onboarding.error, 500);
+  }
+  if (!onboarding.onboarded) {
+    return errorResponse("Complete onboarding before managing trades.", 403);
   }
 
   const { tradeId: tradeIdRaw } = await params;
@@ -156,20 +165,23 @@ export async function PATCH(
       return errorResponse("Only accepted trades can be completed.");
     }
 
-    const { data, error } = await supabase
-      .from("trade_requests")
-      .update({
-        status: "completed",
-      })
-      .eq("trade_id", tradeId)
-      .select("trade_id, status")
-      .maybeSingle();
+    const { data, error } = await supabase.rpc("complete_trade_request", {
+      input_trade_id: tradeId,
+    });
 
     if (error) {
       return errorResponse(error.message);
     }
 
-    return NextResponse.json({ ok: true, trade: data });
+    return NextResponse.json({
+      ok: true,
+      trade: data
+        ? {
+            trade_id: data.trade_id,
+            status: data.status,
+          }
+        : null,
+    });
   }
 
   return errorResponse("Unsupported action.");

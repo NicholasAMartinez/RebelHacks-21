@@ -1,10 +1,13 @@
 import { NextResponse } from "next/server";
+import { getOnboardedState } from "@/lib/onboarding";
 import { getValueTier } from "@/lib/value-tier";
+import { verifySpinProof } from "@/lib/spin-proof";
 import { createClient } from "@/lib/supabase/server";
 
 type TradeCreateBody = {
   requesterItemId?: number | string;
   recipientItemId?: number | string;
+  spinProof?: string;
 };
 
 type TradeRow = {
@@ -53,6 +56,14 @@ export async function GET() {
 
   if (authError || !user) {
     return errorResponse("Unauthorized.", 401);
+  }
+
+  const onboarding = await getOnboardedState(supabase, user.id);
+  if (onboarding.error) {
+    return errorResponse(onboarding.error, 500);
+  }
+  if (!onboarding.onboarded) {
+    return errorResponse("Complete onboarding before using trades.", 403);
   }
 
   const { data: tradeRowsRaw, error: tradeError } = await supabase
@@ -133,12 +144,25 @@ export async function POST(req: Request) {
     return errorResponse("Unauthorized.", 401);
   }
 
+  const onboarding = await getOnboardedState(supabase, user.id);
+  if (onboarding.error) {
+    return errorResponse(onboarding.error, 500);
+  }
+  if (!onboarding.onboarded) {
+    return errorResponse("Complete onboarding before creating trades.", 403);
+  }
+
   const body = (await req.json().catch(() => null)) as TradeCreateBody | null;
   const requesterItemId = toItemId(body?.requesterItemId);
   const recipientItemId = toItemId(body?.recipientItemId);
+  const spinProof = typeof body?.spinProof === "string" ? body.spinProof.trim() : "";
 
   if (!requesterItemId || !recipientItemId) {
     return errorResponse("Both requesterItemId and recipientItemId are required.");
+  }
+
+  if (!spinProof) {
+    return errorResponse("spinProof is required.");
   }
 
   if (requesterItemId === recipientItemId) {
@@ -177,6 +201,16 @@ export async function POST(req: Request) {
 
   if (getValueTier(Number(requesterItem.price)) !== getValueTier(Number(recipientItem.price))) {
     return errorResponse("Items must be in the same value bracket.");
+  }
+
+  const spinProofResult = verifySpinProof({
+    spinProof,
+    requesterItemId: requesterItem.item_id,
+    recipientItemId: recipientItem.item_id,
+  });
+
+  if (!spinProofResult.ok) {
+    return errorResponse(`Invalid spin proof: ${spinProofResult.error}`, 403);
   }
 
   const { data: insertedRows, error: insertError } = await supabase

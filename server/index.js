@@ -1,8 +1,10 @@
 const express = require("express");
+const { createHmac } = require("node:crypto");
 const { randomInt } = require("node:crypto");
 
 const app = express();
 const PORT = process.env.PORT || 3001;
+const spinProofSecret = process.env.SPIN_PROOF_SECRET || "";
 const allowedOrigins = (process.env.CLIENT_ORIGINS || process.env.CLIENT_ORIGIN || "http://localhost:3000,http://127.0.0.1:3000")
   .split(",")
   .map((origin) => origin.trim())
@@ -39,6 +41,26 @@ function normalizeAngle(value) {
   return normalized < 0 ? normalized + 360 : normalized;
 }
 
+function toBase64Url(value) {
+  return Buffer.from(value)
+    .toString("base64")
+    .replace(/\+/g, "-")
+    .replace(/\//g, "_")
+    .replace(/=+$/g, "");
+}
+
+function createSpinProof(payload) {
+  const serialized = JSON.stringify(payload);
+  const payloadEncoded = toBase64Url(serialized);
+  const signature = createHmac("sha256", spinProofSecret)
+    .update(payloadEncoded)
+    .digest("base64")
+    .replace(/\+/g, "-")
+    .replace(/\//g, "_")
+    .replace(/=+$/g, "");
+  return `${payloadEncoded}.${signature}`;
+}
+
 app.get("/", (req, res) => {
   res.send("Express server is running.");
 });
@@ -48,10 +70,28 @@ app.get("/health", (req, res) => {
 });
 
 app.post("/pool/spin", (req, res) => {
+  if (!spinProofSecret) {
+    res.status(500).json({
+      ok: false,
+      error: "Spin proof secret is not configured on the spin service.",
+    });
+    return;
+  }
+
+  const requesterItemId = toItemId(req.body?.requesterItemId);
   const candidateRaw = Array.isArray(req.body?.candidateItemIds) ? req.body.candidateItemIds : [];
-  const candidateItemIds = candidateRaw
+  const candidateItemIds = Array.from(
+    new Set(
+      candidateRaw
     .map((value) => toItemId(value))
-    .filter((value) => !!value);
+        .filter((value) => !!value),
+    ),
+  );
+
+  if (!requesterItemId) {
+    res.status(400).json({ ok: false, error: "A valid requester item id is required." });
+    return;
+  }
 
   if (candidateItemIds.length < 1) {
     res.status(400).json({ ok: false, error: "At least one candidate item is required." });
@@ -73,6 +113,15 @@ app.post("/pool/spin", (req, res) => {
 
   const extraTurns = 360 * (6 + randomInt(5));
   const durationMs = 4200 + randomInt(1800);
+  const issuedAt = Date.now();
+  const expiresAt = issuedAt + 60_000;
+  const spinProof = createSpinProof({
+    requesterItemId,
+    winnerItemId,
+    candidateItemIds,
+    issuedAt,
+    expiresAt,
+  });
 
   res.status(200).json({
     ok: true,
@@ -81,6 +130,7 @@ app.post("/pool/spin", (req, res) => {
     targetAngle,
     extraTurns,
     durationMs,
+    spinProof,
   });
 });
 

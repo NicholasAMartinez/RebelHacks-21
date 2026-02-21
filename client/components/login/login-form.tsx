@@ -36,7 +36,7 @@ export default function LoginForm({
       return;
     }
 
-    if (!username.trim()) {
+    if (submittedMode === "register" && !username.trim()) {
       setMessage("Please enter a username.");
       return;
     }
@@ -95,7 +95,7 @@ export default function LoginForm({
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             placeholder="Your display name"
-            required
+            required={mode === "register"}
           />
         </div>
 

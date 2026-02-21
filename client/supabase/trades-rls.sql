@@ -72,4 +72,95 @@ to authenticated
 using (auth.uid() = requester_id or auth.uid() = recipient_id)
 with check (auth.uid() = requester_id or auth.uid() = recipient_id);
 
+create or replace function public.complete_trade_request(input_trade_id bigint)
+returns public.trade_requests
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  current_user_id uuid := auth.uid();
+  trade_row public.trade_requests;
+begin
+  if current_user_id is null then
+    raise exception using message = 'You must be signed in to complete a trade.', errcode = '42501';
+  end if;
+
+  select *
+  into trade_row
+  from public.trade_requests
+  where trade_id = input_trade_id
+  for update;
+
+  if not found then
+    raise exception using message = 'Trade not found.', errcode = 'P0002';
+  end if;
+
+  if current_user_id <> trade_row.requester_id and current_user_id <> trade_row.recipient_id then
+    raise exception using message = 'You are not a participant in this trade.', errcode = '42501';
+  end if;
+
+  if trade_row.status <> 'accepted' then
+    raise exception using message = 'Only accepted trades can be completed.', errcode = '22023';
+  end if;
+
+  update public.items
+  set user_id = trade_row.recipient_id
+  where item_id = trade_row.requester_item_id;
+
+  update public.items
+  set user_id = trade_row.requester_id
+  where item_id = trade_row.recipient_item_id;
+
+  update public.profiles
+  set
+    wins = coalesce(wins, 0) + 1,
+    "totalBets" = coalesce("totalBets", 0) + 1
+  where id = trade_row.requester_id;
+
+  update public.profiles
+  set "totalBets" = coalesce("totalBets", 0) + 1
+  where id = trade_row.recipient_id;
+
+  insert into public.profile_received_items (receiver_id, item_id, sender_id, note)
+  values (
+    trade_row.requester_id,
+    trade_row.recipient_item_id::text,
+    trade_row.recipient_id,
+    'Trade completed #' || trade_row.trade_id::text
+  )
+  on conflict (receiver_id, item_id)
+  do update
+  set sender_id = excluded.sender_id,
+      note = excluded.note,
+      received_at = timezone('utc', now());
+
+  insert into public.profile_received_items (receiver_id, item_id, sender_id, note)
+  values (
+    trade_row.recipient_id,
+    trade_row.requester_item_id::text,
+    trade_row.requester_id,
+    'Trade completed #' || trade_row.trade_id::text
+  )
+  on conflict (receiver_id, item_id)
+  do update
+  set sender_id = excluded.sender_id,
+      note = excluded.note,
+      received_at = timezone('utc', now());
+
+  update public.trade_requests
+  set
+    status = 'completed',
+    requester_approved = true,
+    recipient_approved = true,
+    declined_by = null
+  where trade_id = input_trade_id
+  returning * into trade_row;
+
+  return trade_row;
+end;
+$$;
+
+grant execute on function public.complete_trade_request(bigint) to authenticated;
+
 commit;
