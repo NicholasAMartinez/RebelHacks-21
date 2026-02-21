@@ -48,6 +48,13 @@ export async function POST(req: Request) {
     );
   }
 
+  if (body.mode === "register" && body.username && body.username.trim().length < 3) {
+    return NextResponse.json(
+      { error: "Username must be at least 3 characters." },
+      { status: 400 },
+    );
+  }
+
   if (body.mode === "login") {
     const { data, error } = await supabase.auth.signInWithPassword({
       email: body.email,

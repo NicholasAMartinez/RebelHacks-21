@@ -34,3 +34,6 @@ export const createClient = async () => {
     },
   });
 };
+
+// Note: no admin/service-role client exported here. Keep service-role usage
+// restricted and explicit if needed.

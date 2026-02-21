@@ -92,7 +92,25 @@ export default function LoginForm({
         </div>
       </div>
 
+
+
+
       <form onSubmit={handleSubmit}>
+
+        {mode === "register" && (
+          <div className={styles.field}>
+            <label className={styles.label}>Username</label>
+            <input
+              className={styles.input}
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              placeholder="Your display name"
+              required
+            />
+          </div>
+        )}
+
         <div className={styles.field}>
           <label className={styles.label}>Email</label>
           <input
@@ -101,6 +119,7 @@ export default function LoginForm({
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
+            placeholder="your.email@example.com"
           />
         </div>
 
@@ -112,21 +131,9 @@ export default function LoginForm({
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
+            placeholder="Password..."
           />
         </div>
-
-        {mode === "register" && (
-          <div className={styles.field}>
-            <label className={styles.label}>Username</label>
-            <input
-              className={styles.input}
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              placeholder="Your display name"
-            />
-          </div>
-        )}
 
         {mode === "register" && (
           <div className={styles.field}>
@@ -137,6 +144,7 @@ export default function LoginForm({
               value={confirm}
               onChange={(e) => setConfirm(e.target.value)}
               required
+              placeholder="Confirm password..."
             />
           </div>
         )}

@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Vegas Swap",
+  title: "Potzi",
   description: "Las Vegas community item marketplace and gamble pool",
 };
 

@@ -64,16 +64,16 @@ export default function InfoPage() {
               </p>
               <div className="grid gap-3">
                 <div className="rounded-md bg-gray-900 p-3 text-gray-200">
-                  <strong className="text-yellow-400">Low</strong>: items under $50
+                  <strong className="text-yellow-400">Low</strong>: items under $49
                 </div>
                 <div className="rounded-md bg-gray-900 p-3 text-gray-200">
-                  <strong className="text-yellow-400">Medium</strong>: $50–$250
+                  <strong className="text-yellow-400">Medium</strong>: $50&ndash;$99
                 </div>
                 <div className="rounded-md bg-gray-900 p-3 text-gray-200">
-                  <strong className="text-yellow-400">High</strong>: $250–$1,000
+                  <strong className="text-yellow-400">High</strong>: $100&ndash;$149
                 </div>
                 <div className="rounded-md bg-gray-900 p-3 text-gray-200">
-                  <strong className="text-yellow-400">Premium</strong>: over $1,000
+                  <strong className="text-yellow-400">Premium</strong>: over $150
                 </div>
               </div>
             </div>
