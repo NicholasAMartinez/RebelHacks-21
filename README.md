@@ -1,6 +1,7 @@
 # Potzi
 
 For the easiest experince just go to the website where it is hosted: https://www.potzi.vegas/
+If that does not work go to: https://rebel-hacks-21-cgxv.vercel.app/
 
 Full-stack trading demo built with a Next.js client and an Express server.
 
