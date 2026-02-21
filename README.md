@@ -2,6 +2,9 @@
 
 For the easiest experince just go to the website where it is hosted: https://www.potzi.vegas/
 If that does not work go to: https://rebel-hacks-21-cgxv.vercel.app/
+You can use the following creditnials if you don't want to make a fake account:
+Username/Email: judge@test.com
+Password: judge@test.com
 
 Full-stack trading demo built with a Next.js client and an Express server.
 
