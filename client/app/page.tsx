@@ -37,7 +37,7 @@ export default function Home() {
               href="/pool"
               className="rounded-lg bg-red-700 px-8 py-3 font-semibold text-white transition-colors hover:bg-red-600"
             >
-              🎲 Start Gambling
+              Start Gambling
             </Link>
           </div>
         </div>
