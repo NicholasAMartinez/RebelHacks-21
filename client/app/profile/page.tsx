@@ -1,5 +1,8 @@
 import { redirect } from "next/navigation";
+import Link from "next/link";
 import { VegasHeader } from "@/components/vegas/header";
+import { ItemCard } from "@/components/vegas/item-card";
+import { mockItems } from "@/lib/vegas-data";
 import { createClient } from "@/lib/supabase/server";
 
 export default async function ProfilePage() {
@@ -47,6 +50,7 @@ export default async function ProfilePage() {
   }
 
   const displayName = profile?.username || fallbackUsername;
+  const previewItem = mockItems.find((item) => item.ownerName === "You") ?? mockItems[0];
 
   return (
     <div className="min-h-screen bg-black">
@@ -78,6 +82,28 @@ export default async function ProfilePage() {
                   : "Not available"}
               </p>
             </div>
+          </div>
+
+          <div className="mt-8">
+            <h2 className="mb-4 text-xl font-semibold text-white">My Item Card</h2>
+            <div className="max-w-xs">
+              <ItemCard item={previewItem} compact />
+            </div>
+          </div>
+
+          <div className="mt-8 flex flex-wrap gap-3">
+            <Link
+              href="/profile/items"
+              className="rounded-lg bg-yellow-400 px-6 py-3 font-semibold text-black transition-colors hover:bg-yellow-300"
+            >
+              My Items
+            </Link>
+            <Link
+              href="/profile/items/new"
+              className="rounded-lg bg-red-700 px-6 py-3 font-semibold text-white transition-colors hover:bg-red-600"
+            >
+              Add Item
+            </Link>
           </div>
 
           <form action={signOut} className="mt-8">

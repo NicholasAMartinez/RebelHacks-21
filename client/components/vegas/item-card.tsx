@@ -6,6 +6,7 @@ type ItemCardProps = {
   showSelectButton?: boolean;
   onSelect?: (item: Item) => void;
   disabled?: boolean;
+  compact?: boolean;
 };
 
 export function ItemCard({
@@ -14,6 +15,7 @@ export function ItemCard({
   showSelectButton = false,
   onSelect,
   disabled = false,
+  compact = false,
 }: ItemCardProps) {
   return (
     <article
@@ -23,16 +25,22 @@ export function ItemCard({
           : "border-gray-700 hover:border-gray-600"
       }`}
     >
-      <div className="relative h-48 overflow-hidden">
+      <div className={`relative overflow-hidden ${compact ? "h-32" : "h-48"}`}>
         <img src={item.imageUrl} alt={item.name} className="h-full w-full object-cover" />
         <div className="absolute right-2 top-2 rounded bg-black/70 px-2 py-1 text-xs text-yellow-400">
           ${item.estimatedValue}
         </div>
       </div>
 
-      <div className="p-4">
-        <h3 className="mb-1 text-lg font-semibold text-white">{item.name}</h3>
-        <p className="mb-3 min-h-10 text-sm text-gray-400">{item.description}</p>
+      <div className={compact ? "p-3" : "p-4"}>
+        <h3 className={`mb-1 font-semibold text-white ${compact ? "text-base" : "text-lg"}`}>
+          {item.name}
+        </h3>
+        <p
+          className={`mb-3 text-gray-400 ${compact ? "max-h-8 overflow-hidden text-xs" : "min-h-10 text-sm"}`}
+        >
+          {item.description}
+        </p>
 
         <div className="mb-3 flex items-center gap-4 text-xs text-gray-400 font-bold">
           <span>Condition: {item.condition}</span>
