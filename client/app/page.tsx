@@ -23,7 +23,7 @@ export default async function Home() {
         <div className="absolute inset-0 bg-linear-to-b from-black/70 via-black/50 to-black" />
         <div className="relative z-10 px-4 text-center">
           <h1 className="mb-4 text-5xl font-bold text-white md:text-6xl">
-            Welcome to <span className="text-yellow-400">Vegas Swap</span>
+            Welcome to <span className="text-yellow-400">Potzi!</span>
           </h1>
           <p className="mx-auto mb-8 max-w-2xl text-lg text-gray-300 md:text-xl">
             Turn your unwanted items into treasure. Gamble with stuff you do not
@@ -81,6 +81,15 @@ export default async function Home() {
               <h3 className="mb-2 text-xl font-semibold text-white">3. Get New Stuff</h3>
               <p className="text-gray-400">
                 Win items you actually want and arrange a local pickup in Vegas.
+              </p>
+            </div>
+            <div className="rounded-lg border-2 border-red-900 bg-gray-800 p-6">
+              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-red-700 text-xl text-yellow-400">
+                😌
+              </div>
+              <h3 className="mb-2 text-xl font-semibold text-white">3. No Pressure</h3>
+              <p className="text-gray-400">
+                No obligation to win or lose. Join the fun when you want, skip when you don't.
               </p>
             </div>
           </div>
