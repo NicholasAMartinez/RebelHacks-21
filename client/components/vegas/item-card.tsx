@@ -5,6 +5,12 @@ type ItemCardProps = {
   selected?: boolean;
   showSelectButton?: boolean;
   onSelect?: (item: Item) => void;
+  showEditButton?: boolean;
+  onEdit?: (item: Item) => void;
+  editDisabled?: boolean;
+  showRemoveButton?: boolean;
+  onRemove?: (item: Item) => void;
+  removeDisabled?: boolean;
   disabled?: boolean;
   compact?: boolean;
 };
@@ -14,6 +20,12 @@ export function ItemCard({
   selected = false,
   showSelectButton = false,
   onSelect,
+  showEditButton = false,
+  onEdit,
+  editDisabled = false,
+  showRemoveButton = false,
+  onRemove,
+  removeDisabled = false,
   disabled = false,
   compact = false,
 }: ItemCardProps) {
@@ -52,24 +64,64 @@ export function ItemCard({
             {item.category}
           </span>
 
-          {showSelectButton ? (
-            <button
-              type="button"
-              onClick={() => {
-                if (disabled) return;
-                onSelect?.(item);
-              }}
-              disabled={disabled}
-              className={`rounded-md px-4 py-1 text-sm font-semibold transition-colors ${
-                selected
-                  ? "bg-amber-300 text-black"
-                  : disabled
-                    ? "cursor-not-allowed bg-zinc-700 text-zinc-200 opacity-60"
-                    : "bg-red-700 text-white hover:bg-red-600"
-              }`}
-            >
-              {selected ? "Selected" : disabled ? "Locked" : "Select"}
-            </button>
+          {showSelectButton || showEditButton || showRemoveButton ? (
+            <div className="flex items-center gap-2">
+              {showSelectButton ? (
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (disabled) return;
+                    onSelect?.(item);
+                  }}
+                  disabled={disabled}
+                  className={`rounded-md px-4 py-1 text-sm font-semibold transition-colors ${
+                    selected
+                      ? "bg-amber-300 text-black"
+                      : disabled
+                        ? "cursor-not-allowed bg-zinc-700 text-zinc-200 opacity-60"
+                        : "bg-red-700 text-white hover:bg-red-600"
+                  }`}
+                >
+                  {selected ? "Selected" : disabled ? "Locked" : "Select"}
+                </button>
+              ) : null}
+
+              {showEditButton ? (
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (editDisabled) return;
+                    onEdit?.(item);
+                  }}
+                  disabled={editDisabled}
+                  className={`rounded-md px-3 py-1 text-sm font-semibold transition-colors ${
+                    editDisabled
+                      ? "cursor-not-allowed bg-zinc-700 text-zinc-200 opacity-60"
+                      : "bg-amber-300 text-black hover:bg-amber-200"
+                  }`}
+                >
+                  Edit
+                </button>
+              ) : null}
+
+              {showRemoveButton ? (
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (removeDisabled) return;
+                    onRemove?.(item);
+                  }}
+                  disabled={removeDisabled}
+                  className={`rounded-md px-3 py-1 text-sm font-semibold transition-colors ${
+                    removeDisabled
+                      ? "cursor-not-allowed bg-zinc-700 text-zinc-200 opacity-60"
+                      : "bg-zinc-200 text-black hover:bg-white"
+                  }`}
+                >
+                  Remove
+                </button>
+              ) : null}
+            </div>
           ) : null}
         </div>
       </div>
