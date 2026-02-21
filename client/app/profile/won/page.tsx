@@ -85,30 +85,24 @@ export default async function WonItemsPage() {
     (itemRows ?? []).map((row) => [String(row.item_id ?? ""), row]),
   );
 
-  const wonItems = receivedRows.map((row) => {
-    const senderName = row.sender_id ? (senderNameById.get(row.sender_id) ?? "Player") : "Player";
-    const itemRow =
-      itemById.get(String(row.item_id)) ?? {
-        item_id: row.item_id,
-        name: "Unknown Item",
-        desc: "This item is no longer available.",
-        price: 0,
-        url: "/file.svg",
-        category: "Misc",
-        condition: "Good",
-        user_id: row.sender_id ?? "",
-      };
+  const wonItems = receivedRows.flatMap((row) => {
+    const itemRow = itemById.get(String(row.item_id));
+    if (!itemRow) return [];
 
-    return {
-      receivedId: row.received_id,
-      receivedAt: row.received_at,
-      note: row.note,
-      senderName,
-      item: mapRowToItem({
-        ...itemRow,
-        owner_name: senderName,
-      }),
-    };
+    const senderName = row.sender_id ? (senderNameById.get(row.sender_id) ?? "Player") : "Player";
+
+    return [
+      {
+        receivedId: row.received_id,
+        receivedAt: row.received_at,
+        note: row.note,
+        senderName,
+        item: mapRowToItem({
+          ...itemRow,
+          owner_name: senderName,
+        }),
+      },
+    ];
   });
 
   return (

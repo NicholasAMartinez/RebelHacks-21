@@ -123,6 +123,34 @@ for delete
 to authenticated
 using (auth.uid() = receiver_id);
 
+create or replace function public.cleanup_received_items_for_deleted_item()
+returns trigger
+language plpgsql
+security definer
+set search_path = public
+as $$
+begin
+  delete from public.profile_received_items
+  where item_id = old.item_id::text;
+
+  return old;
+end;
+$$;
+
+drop trigger if exists items_cleanup_received_items on public.items;
+
+create trigger items_cleanup_received_items
+after delete on public.items
+for each row
+execute procedure public.cleanup_received_items_for_deleted_item();
+
+delete from public.profile_received_items r
+where not exists (
+  select 1
+  from public.items i
+  where i.item_id::text = r.item_id
+);
+
 create or replace function public.set_my_profile_name(input_name text)
 returns public.profiles
 language plpgsql
@@ -325,8 +353,8 @@ select coalesce(
               'sender_name', sender.name,
               'item',
               jsonb_build_object(
-                'item_id', coalesce(i.item_id::text, r.item_id),
-                'name', coalesce(i.name, 'Unknown Item'),
+                'item_id', i.item_id::text,
+                'name', i.name,
                 'desc', coalesce(i."desc", ''),
                 'price', coalesce(i.price, 0),
                 'url', coalesce(i.url, ''),
@@ -338,7 +366,7 @@ select coalesce(
             order by r.received_at desc
           )
           from public.profile_received_items r
-          left join public.items i
+          join public.items i
             on i.item_id::text = r.item_id
           left join public.profiles sender
             on sender.id = r.sender_id

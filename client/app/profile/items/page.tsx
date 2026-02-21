@@ -44,7 +44,9 @@ export default async function MyItemsPage() {
         <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
           <div>
             <h1 className="text-4xl font-bold text-amber-200">My Items</h1>
-            <p className="mt-2 text-zinc-400">Items currently listed under {displayName}.</p>
+            <p className="mt-2 text-zinc-400">
+              Items you currently own (posted by you or won in trades/spins).
+            </p>
           </div>
           <div className="flex flex-wrap gap-3">
             <Link
