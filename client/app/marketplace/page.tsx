@@ -42,11 +42,11 @@ export default function MarketplacePage() {
   }, [items, searchQuery, selectedCategory]);
 
   return (
-    <div className="min-h-screen bg-slate-950 text-zinc-100">
+    <div className="page-shell">
       <VegasHeader />
 
       <main className="mx-auto max-w-6xl px-4 py-8 sm:px-6">
-        <h1 className="mb-2 text-4xl font-bold text-white">Marketplace</h1>
+        <h1 className="mb-2 text-4xl font-bold text-amber-200">Marketplace</h1>
         <p className="mb-8 text-zinc-400">
           Browse community items and add eligible picks to your pool.
         </p>
