@@ -247,42 +247,42 @@ export default function PoolPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen bg-slate-950 text-zinc-100">
       <VegasHeader />
 
-      <main className="mx-auto max-w-6xl px-4 py-8">
+      <main className="mx-auto max-w-6xl px-4 py-8 sm:px-6">
         <div className="mb-8 text-center">
           <h1 className="mb-2 text-4xl font-bold text-white">Gamble Zone</h1>
-          <p className="text-gray-400">
-            Select 1-6 items to enter the pool, then spin the wheel to see who wins it all.
+          <p className="text-zinc-400">
+            Select 1-6 items in the same value tier, then spin to pick the winner.
           </p>
         </div>
 
         {selectedItems.length > 0 ? (
-          <section className="mb-8 rounded-lg border-2 border-red-900 bg-linear-to-b from-gray-900 to-gray-800 p-8">
+          <section className="mb-8 rounded-xl border border-zinc-800 bg-zinc-900/70 p-6 sm:p-8">
             <RouletteWheel items={selectedItems} isSpinning={isSpinning} spinAngle={spinAngle} />
 
             <div className="mt-8 text-center">
-              <p className="mb-4 text-gray-400">
+              <p className="mb-4 text-zinc-400">
                 {selectedItems.length} {selectedItems.length === 1 ? "item" : "items"} selected
                 {selectedItems.length >= 6 ? " (maximum reached)" : ""}
               </p>
 
-              <div className="flex flex-wrap justify-center gap-4">
+              <div className="flex flex-wrap justify-center gap-3">
                 <button
                   type="button"
                   onClick={handleSpin}
                   disabled={selectedItems.length < 1 || isSpinning}
-                  className="rounded-lg bg-yellow-400 px-8 py-3 font-semibold text-black transition-colors hover:bg-yellow-300 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="rounded-lg bg-amber-300 px-8 py-3 font-semibold text-black hover:bg-amber-200 disabled:cursor-not-allowed disabled:opacity-50"
                 >
-                  {isSpinning ? "⟳ Spinning..." : "Spin The Wheel"}
+                  {isSpinning ? "Spinning..." : "Spin The Wheel"}
                 </button>
 
                 {!isSpinning ? (
                   <button
                     type="button"
                     onClick={handleReset}
-                    className="rounded-lg bg-gray-700 px-6 py-3 font-semibold text-white transition-colors hover:bg-gray-600"
+                    className="rounded-lg border border-zinc-600 bg-zinc-900 px-6 py-3 font-semibold text-white hover:border-zinc-400"
                   >
                     Reset
                   </button>
@@ -291,10 +291,10 @@ export default function PoolPage() {
             </div>
 
             {showResult && result ? (
-              <div className="mt-8 rounded-lg border-2 border-yellow-400 bg-linear-to-r from-yellow-900/50 to-red-900/50 p-6">
+              <div className="mt-8 rounded-xl border border-amber-400/60 bg-zinc-900 p-6">
                 <div className="text-center">
                   <h2 className="mb-2 text-3xl font-bold text-white">Winner!</h2>
-                  <p className="mb-4 text-xl text-yellow-400">{result.ownerName} wins all items!</p>
+                  <p className="mb-4 text-xl text-amber-300">{result.ownerName} wins all items!</p>
                   {currentUserId && result.ownerId === currentUserId ? (
                     <div className="mb-4">
                       <p className="text-sm text-green-300">
@@ -321,16 +321,18 @@ export default function PoolPage() {
           <h2 className="mb-4 text-2xl font-bold text-white">
             Select Items To Gamble
             {selectedItems.length > 0 ? (
-              <span className="ml-2 text-yellow-400">({selectedItems.length}/6)</span>
+              <span className="ml-2 text-amber-300">({selectedItems.length}/6)</span>
             ) : null}
           </h2>
 
           {notice ? (
-            <div className="mb-4 rounded bg-red-900/60 px-4 py-2 text-sm text-red-200">{notice}</div>
+            <div className="mb-4 rounded-lg border border-red-500/50 bg-red-950/50 px-4 py-2 text-sm text-red-200">
+              {notice}
+            </div>
           ) : null}
 
           {isLoading ? (
-            <p className="py-16 text-center text-lg text-gray-400">Loading items...</p>
+            <p className="py-16 text-center text-lg text-zinc-400">Loading items...</p>
           ) : (
             <div className="space-y-8">
               {tiers.map((tier) => {
@@ -338,7 +340,7 @@ export default function PoolPage() {
                 if (itemsInTier.length === 0) return null;
 
                 return (
-                  <div key={tier.key} className="rounded-md bg-gray-900/40 p-4">
+                  <div key={tier.key} className="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4">
                     <h3 className="mb-3 text-lg font-semibold text-white">{tier.key}</h3>
                     <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                       {itemsInTier.map((item) => {
