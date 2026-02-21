@@ -1,86 +1,87 @@
 # RebelHacks-21
-A small full-stack demo project (Next.js client + Express server).
+
+Full-stack trading demo built with a Next.js client and an Express server.
+
+## Tech stack
+
+- Client: Next.js, React, TypeScript, Supabase
+- Server: Node.js, Express
+
+## Project structure
+
+- `client/`: Next.js app (UI + API routes)
+- `server/`: Express service used by the client
+- `client/supabase/`: SQL setup scripts (RLS + onboarding/trades logic)
 
 ## Prerequisites
 
-- Node.js (v18 or newer recommended)
-- npm (comes with Node.js)
+- Node.js 18+
+- npm
 
-## Install dependencies
-
-Open two terminals and run the following commands to install dependencies for each part of the repo.
-
-Client (Next.js):
+## 1) Install dependencies
 
 ```bash
-cd client
-npm install
+cd client && npm install
+cd ../server && npm install
 ```
 
-Server (Express):
+## 2) Configure environment variables
 
-```bash
-cd server
-npm install
-```
-
-## Environment variables
-
-The client uses Supabase. Create a `.env.local` file inside the `client` folder with the following keys (replace the values):
+Create `client/.env.local`:
 
 ```env
 NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
 NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=your-publishable-key
-```
-
-The server does not require any special environment variables by default. It listens on `PORT` (defaults to `3001`).
-For secure spin validation, configure the same `SPIN_PROOF_SECRET` value in both:
-
-- `server/.env` (used to sign `/pool/spin` responses)
-- `client/.env.local` (used by `POST /api/trades` to verify proof)
-
-```env
 SPIN_PROOF_SECRET=replace-with-a-long-random-secret
 ```
 
-For onboarding and trade settlement DB behavior, run:
+Create `server/.env`:
 
-- `client/supabase/onboarding.sql`
-- `client/supabase/profiles-rls.sql`
-- `client/supabase/trades-rls.sql`
+```env
+PORT=3001
+SPIN_PROOF_SECRET=replace-with-the-same-secret-as-client
+```
 
-## Run locally (development)
+Important: `SPIN_PROOF_SECRET` must match in both `client/.env.local` and `server/.env`.
 
-Start the server first, then the client (use separate terminals):
+## 3) Set up database (Supabase SQL)
 
-Server:
+Run these scripts in your Supabase SQL editor:
+
+1. `client/supabase/onboarding.sql`
+2. `client/supabase/profiles-rls.sql`
+3. `client/supabase/trades-rls.sql`
+
+Optional helper scripts (if needed):
+
+- `client/supabase/fix-auth-profile-trigger.sql`
+- `client/supabase/seed.sql`
+- `client/supabase/remove-demo-items.sql`
+
+## 4) Run locally
+
+Start backend:
 
 ```bash
 cd server
 npm run dev
 ```
 
-Client:
+Start frontend in a second terminal:
 
 ```bash
 cd client
 npm run dev
 ```
 
-The Next.js client typically runs at http://localhost:3000 and the Express server at http://localhost:3001.
+App URLs:
 
-To verify the server is running, open:
+- Client: `http://localhost:3000`
+- Server health check: `http://localhost:3001/health`
 
-```
-http://localhost:3001/health
-```
+## Production-like run
 
-## Build and start (production-like)
-
-Build the client and run both services:
-
-
-Client build & start:
+Client:
 
 ```bash
 cd client
@@ -88,15 +89,34 @@ npm run build
 npm run start
 ```
 
-Server start:
+Server:
 
 ```bash
 cd server
 npm start
 ```
 
-Judge info just make a fake account
-Judgex
-judgex@test.com
-password123
-password123
+## Demo account for judges
+
+Use a test account (or create one quickly in-app):
+
+- Email: `judgex@test.com`
+- Password: `password123`
+
+## Screenshots / Pictures
+
+Add your screenshots to this repository and keep this section updated before final judging.
+
+Suggested files:
+
+- `docs/screenshots/home.png`
+- `docs/screenshots/profile.png`
+- `docs/screenshots/trades.png`
+
+Example embed format:
+
+```md
+![Home screen](docs/screenshots/home.png)
+![Profile screen](docs/screenshots/profile.png)
+![Trades screen](docs/screenshots/trades.png)
+```

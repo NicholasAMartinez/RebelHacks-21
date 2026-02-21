@@ -129,7 +129,7 @@ export default function TradesPage() {
           <div>
             <h1 className="text-2xl font-bold text-amber-200 sm:text-3xl">Trade Requests</h1>
             <p className="mt-1 text-sm text-zinc-400">
-              When both users accept, complete the exchange at <span className="font-semibold text-amber-300">Central PD</span>.
+              When both users accept, complete the exchange at LVMPD Community Center <span className="font-semibold text-amber-300">2846 S Las Vegas Blvd, Las Vegas, NV 89109</span>.
             </p>
           </div>
           <Link
