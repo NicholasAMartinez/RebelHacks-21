@@ -149,18 +149,18 @@ export default async function ProfilePage() {
               <div className="flex h-16 w-16 items-center justify-center rounded-xl bg-amber-300 text-2xl font-black text-black sm:h-20 sm:w-20 sm:text-3xl">
                 {initials}
               </div>
-              <div>
+              <div className="min-w-0">
                 <p className="text-xs font-semibold uppercase tracking-[0.2em] text-amber-300/80">
                   Player Profile
                 </p>
                 <h1 className="mt-1 text-2xl font-bold text-rose-200 sm:text-3xl">
                   {displayName}
                 </h1>
-                <p className="mt-1 text-sm text-zinc-300 sm:text-base">{user.email}</p>
+                <p className="mt-1 break-all text-sm text-zinc-300 sm:text-base">{user.email}</p>
               </div>
             </div>
 
-            <div className="rounded-xl border border-zinc-700 bg-slate-950 px-4 py-3 text-xs text-zinc-400 sm:text-sm">
+            <div className="max-w-full break-all rounded-xl border border-zinc-700 bg-slate-950 px-4 py-3 text-xs text-zinc-400 sm:text-sm">
               <span className="font-semibold text-zinc-300">User ID:</span> {user.id}
             </div>
           </div>
@@ -194,25 +194,25 @@ export default async function ProfilePage() {
             <div className="flex flex-wrap gap-2">
               <Link
                 href="/profile/items"
-                className="rounded-lg border border-zinc-600 bg-zinc-900 px-4 py-2 text-sm font-semibold text-white hover:border-zinc-400"
+                className="w-full rounded-lg border border-zinc-600 bg-zinc-900 px-4 py-2 text-center text-sm font-semibold text-white hover:border-zinc-400 sm:w-auto"
               >
                 All
               </Link>
               <Link
                 href="/profile/trades"
-                className="rounded-lg border border-blue-500/60 bg-blue-700 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-600"
+                className="w-full rounded-lg border border-blue-500/60 bg-blue-700 px-4 py-2 text-center text-sm font-semibold text-white hover:bg-blue-600 sm:w-auto"
               >
                 Trade Requests
               </Link>
               <Link
                 href="/profile/won"
-                className="rounded-lg border border-amber-400/70 bg-amber-300 px-4 py-2 text-sm font-semibold text-black hover:bg-amber-200"
+                className="w-full rounded-lg border border-amber-400/70 bg-amber-300 px-4 py-2 text-center text-sm font-semibold text-black hover:bg-amber-200 sm:w-auto"
               >
                 Won Items
               </Link>
               <Link
                 href="/profile/items/new"
-                className="rounded-lg border border-red-500/70 bg-red-700 px-4 py-2 text-sm font-semibold text-white hover:bg-red-600"
+                className="w-full rounded-lg border border-red-500/70 bg-red-700 px-4 py-2 text-center text-sm font-semibold text-white hover:bg-red-600 sm:w-auto"
               >
                 Add New Item
               </Link>
@@ -246,19 +246,19 @@ export default async function ProfilePage() {
             <div className="flex flex-wrap gap-2">
               <Link
                 href="/profile/trades"
-                className="rounded-lg border border-blue-500/60 bg-blue-700 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-600"
+                className="w-full rounded-lg border border-blue-500/60 bg-blue-700 px-4 py-2 text-center text-sm font-semibold text-white hover:bg-blue-600 sm:w-auto"
               >
                 Trade Requests
               </Link>
               <Link
                 href="/profile/won"
-                className="rounded-lg border border-zinc-600 bg-zinc-900 px-4 py-2 text-sm font-semibold text-white hover:border-zinc-400"
+                className="w-full rounded-lg border border-zinc-600 bg-zinc-900 px-4 py-2 text-center text-sm font-semibold text-white hover:border-zinc-400 sm:w-auto"
               >
                 View All Won Items
               </Link>
               <Link
                 href="/pool"
-                className="rounded-lg border border-amber-400/70 bg-amber-300 px-4 py-2 text-sm font-semibold text-black hover:bg-amber-200"
+                className="w-full rounded-lg border border-amber-400/70 bg-amber-300 px-4 py-2 text-center text-sm font-semibold text-black hover:bg-amber-200 sm:w-auto"
               >
                 Gamble
               </Link>

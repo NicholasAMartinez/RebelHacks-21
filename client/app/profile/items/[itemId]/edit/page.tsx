@@ -134,14 +134,14 @@ export default async function EditItemPage({ params }: EditItemPageProps) {
       <VegasHeader />
 
       <main className="mx-auto max-w-3xl px-4 py-8 sm:px-6">
-        <div className="mb-6 flex items-center justify-between gap-4">
+        <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
           <div>
-            <h1 className="text-4xl font-bold text-amber-200">Edit Item</h1>
+            <h1 className="text-3xl font-bold text-amber-200 sm:text-4xl">Edit Item</h1>
             <p className="mt-2 text-zinc-400">Update your existing item listing.</p>
           </div>
           <Link
             href="/profile/items"
-            className="rounded-lg border border-zinc-600 bg-zinc-900 px-4 py-2 font-semibold text-white hover:border-zinc-400"
+            className="w-full rounded-lg border border-zinc-600 bg-zinc-900 px-4 py-2 text-center font-semibold text-white hover:border-zinc-400 sm:w-auto"
           >
             Back
           </Link>

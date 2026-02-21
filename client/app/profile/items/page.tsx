@@ -43,7 +43,7 @@ export default async function MyItemsPage() {
       <main className="mx-auto max-w-6xl px-4 py-8 sm:px-6">
         <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
           <div>
-            <h1 className="text-4xl font-bold text-amber-200">My Items</h1>
+            <h1 className="text-3xl font-bold text-amber-200 sm:text-4xl">My Items</h1>
             <p className="mt-2 text-zinc-400">
               Items you currently own (posted by you or won in trades/spins).
             </p>
@@ -51,13 +51,13 @@ export default async function MyItemsPage() {
           <div className="flex flex-wrap gap-3">
             <Link
               href="/profile"
-              className="rounded-lg border border-zinc-600 bg-zinc-900 px-4 py-2 font-semibold text-white hover:border-zinc-400"
+              className="w-full rounded-lg border border-zinc-600 bg-zinc-900 px-4 py-2 text-center font-semibold text-white hover:border-zinc-400 sm:w-auto"
             >
               Back to Profile
             </Link>
             <Link
               href="/profile/items/new"
-              className="rounded-lg bg-red-700 px-4 py-2 font-semibold text-white hover:bg-red-600"
+              className="w-full rounded-lg bg-red-700 px-4 py-2 text-center font-semibold text-white hover:bg-red-600 sm:w-auto"
             >
               Add Item
             </Link>

@@ -5,6 +5,11 @@
   --foreground: #e5e7eb;
 }
 
+html,
+body {
+  max-width: 100%;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -20,12 +25,19 @@ body {
     radial-gradient(circle at 82% 84%, rgba(6, 95, 70, 0.16), transparent 34%);
   color: var(--foreground);
   font-family: var(--font-geist-sans), sans-serif;
+  overflow-x: clip;
 }
 
 .page-shell {
   min-height: 100vh;
   color: #e5e7eb;
   background-color: transparent;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
 a,

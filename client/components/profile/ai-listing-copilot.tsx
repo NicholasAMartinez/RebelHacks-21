@@ -103,7 +103,7 @@ export function AiListingCopilot({ className = "" }: CopilotProps) {
           type="button"
           onClick={() => void runAssistant()}
           disabled={isLoading}
-          className="rounded-md bg-emerald-500 px-3 py-2 text-sm font-semibold text-black hover:bg-emerald-400 disabled:cursor-not-allowed disabled:opacity-60"
+          className="w-full rounded-md bg-emerald-500 px-3 py-2 text-sm font-semibold text-black hover:bg-emerald-400 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
         >
           {isLoading ? "Analyzing..." : "Generate AI Suggestion"}
         </button>

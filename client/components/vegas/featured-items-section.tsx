@@ -121,8 +121,8 @@ export function FeaturedItemsSection() {
   return (
     <section className="px-4 py-16 sm:px-6">
       <div className="mx-auto max-w-6xl">
-        <div className="mb-8 flex items-end justify-between gap-4">
-          <h2 className="text-3xl font-bold text-amber-200 sm:text-4xl">Featured Items</h2>
+        <div className="mb-8 flex flex-wrap items-end justify-between gap-3">
+          <h2 className="text-2xl font-bold text-amber-200 sm:text-4xl">Featured Items</h2>
           <Link href="/profile/items/new" className="text-sm font-semibold text-amber-300 hover:text-amber-200">
             Add your item
           </Link>

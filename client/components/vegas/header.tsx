@@ -38,23 +38,53 @@ export function VegasHeader() {
           </span>
         </Link>
 
-        <nav className="flex flex-wrap gap-2">
-          {navItems.map((item) => {
-            const isActive = pathname === item.href;
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`rounded-lg px-3 py-2 text-sm font-medium transition-colors md:text-base ${
-                  isActive
-                    ? "bg-white/10 text-amber-200"
-                    : "text-zinc-200 hover:bg-white/5"
-                }`}
-              >
-                {item.label}
-              </Link>
-            );
-          })}
+        <div className="flex items-center gap-2">
+          <nav className="hidden flex-wrap gap-2 sm:flex">
+            {navItems.map((item) => {
+              const isActive =
+                pathname === item.href ||
+                (item.href !== "/" && pathname.startsWith(item.href));
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`rounded-lg px-3 py-2 text-sm font-medium transition-colors md:text-base ${
+                    isActive
+                      ? "bg-white/10 text-amber-200"
+                      : "text-zinc-200 hover:bg-white/5"
+                  }`}
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
+          </nav>
+
+          <details className="relative sm:hidden">
+            <summary className="flex list-none h-10 cursor-pointer items-center justify-center rounded-lg border border-zinc-700 bg-zinc-900 px-3 text-sm font-semibold text-zinc-100 hover:border-zinc-500 [&::-webkit-details-marker]:hidden">
+              Menu
+            </summary>
+            <div className="absolute right-0 mt-2 w-44 rounded-lg border border-zinc-700 bg-zinc-950 p-2 shadow-xl">
+              {navItems.map((item) => {
+                const isActive =
+                  pathname === item.href ||
+                  (item.href !== "/" && pathname.startsWith(item.href));
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={`block rounded-md px-3 py-2 text-sm ${
+                      isActive
+                        ? "bg-white/10 font-semibold text-amber-200"
+                        : "text-zinc-200 hover:bg-white/5"
+                    }`}
+                  >
+                    {item.label}
+                  </Link>
+                );
+              })}
+            </div>
+          </details>
 
           <details className="relative">
             <summary className="flex list-none h-10 w-10 cursor-pointer items-center justify-center rounded-full border border-zinc-700 bg-zinc-900 text-sm font-bold text-amber-200 hover:border-zinc-500 [&::-webkit-details-marker]:hidden">
@@ -83,7 +113,7 @@ export function VegasHeader() {
               </button>
             </div>
           </details>
-        </nav>
+        </div>
       </div>
     </header>
   );

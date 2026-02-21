@@ -48,27 +48,27 @@ export function ItemCard({
       </div>
 
       <div className={compact ? "p-3" : "p-4"}>
-        <h3 className={`mb-1 font-semibold text-white ${compact ? "text-base" : "text-lg"}`}>
+        <h3 className={`mb-1 break-words font-semibold text-white ${compact ? "text-base" : "text-lg"}`}>
           {item.name}
         </h3>
         <p
-          className={`mb-3 text-zinc-400 ${compact ? "max-h-8 overflow-hidden text-xs" : "min-h-10 text-sm"}`}
+          className={`mb-3 break-words text-zinc-400 ${compact ? "max-h-8 overflow-hidden text-xs" : "min-h-10 text-sm"}`}
         >
           {item.description}
         </p>
 
-        <div className="mb-3 flex items-center gap-4 text-xs font-semibold text-zinc-400">
+        <div className="mb-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs font-semibold text-zinc-400">
           <span>Condition: {item.condition}</span>
           <span>Owner: {item.ownerName}</span>
         </div>
 
-        <div className="flex items-center justify-between gap-2">
+        <div className="flex flex-wrap items-center justify-between gap-2">
           <span className="rounded-md border border-zinc-700 bg-zinc-900 px-2 py-1 text-xs text-zinc-300">
             {item.category}
           </span>
 
           {showSelectButton || showEditButton || showRemoveButton ? (
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2">
               {showSelectButton ? (
                 <button
                   type="button"

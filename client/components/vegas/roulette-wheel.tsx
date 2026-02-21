@@ -31,7 +31,7 @@ export function RouletteWheel({
   spinAngle,
   spinDurationMs = 4000,
 }: RouletteWheelProps) {
-  const size = 320; // px
+  const size = 320;
   const radius = 140;
   const center = size / 2;
 
@@ -40,22 +40,20 @@ export function RouletteWheel({
     : "none";
 
   return (
-    <div className="relative mx-auto h-80 w-80">
+    <div className="relative mx-auto aspect-square w-full max-w-[20rem]">
       <div className="absolute inset-0 flex items-center justify-center rounded-full border-8 border-zinc-300/80 shadow-2xl shadow-black/40">
         <div
-          style={{ width: size, height: size }}
-          className="relative"
+          className="relative h-full w-full"
         >
           <div
             style={{
-              width: size,
-              height: size,
               transform: `rotate(${spinAngle}deg)`,
               transition,
               transformOrigin: "50% 50%",
             }}
+            className="h-full w-full"
           >
-            <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} xmlns="http://www.w3.org/2000/svg">
+            <svg width="100%" height="100%" viewBox={`0 0 ${size} ${size}`} xmlns="http://www.w3.org/2000/svg">
               {items.length === 0 ? null : items.map((item, index) => {
                 const segment = 360 / items.length;
                 const start = index * segment;
@@ -92,7 +90,7 @@ export function RouletteWheel({
       </div>
 
       <div className="absolute left-1/2 top-0 z-20 -translate-x-1/2 -translate-y-2">
-        <div className="h-0 w-0 border-l-8 border-r-8 border-t-12 border-l-transparent border-r-transparent border-t-zinc-200" />
+        <div className="h-0 w-0 border-x-8 border-x-transparent border-t-[12px] border-t-zinc-200" />
       </div>
     </div>
   );

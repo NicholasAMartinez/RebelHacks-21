@@ -9,8 +9,8 @@ export default function InfoPage() {
       <header className="border-b border-white/10 px-4 py-12 sm:px-6">
         <div className="mx-auto max-w-5xl">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-amber-300">How It Works</p>
-          <h1 className="mt-3 text-4xl font-bold text-amber-200 md:text-5xl">Clear Rules. Fair Pools.</h1>
-          <p className="mt-4 max-w-2xl text-lg text-zinc-300">
+          <h1 className="mt-3 text-3xl font-bold text-amber-200 md:text-5xl">Clear Rules. Fair Pools.</h1>
+          <p className="mt-4 max-w-2xl text-base text-zinc-300 sm:text-lg">
             Learn how items are assessed, matched, and safely traded in Potzi.
           </p>
           <div className="mt-6 flex flex-wrap gap-3">

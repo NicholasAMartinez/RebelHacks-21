@@ -24,12 +24,12 @@ export default async function Home() {
           />
         </div>
         <div className="absolute inset-0 bg-black/65" />
-        <div className="relative mx-auto grid min-h-120 w-full max-w-6xl gap-8 px-4 py-14 sm:px-6 lg:grid-cols-[minmax(0,1fr)_360px] lg:items-center">
+        <div className="relative mx-auto grid w-full max-w-6xl gap-8 px-4 py-12 sm:px-6 sm:py-14 lg:grid-cols-[minmax(0,1fr)_360px] lg:items-center">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-amber-300">
               Vegas Community Swap
             </p>
-            <h1 className="mt-4 text-4xl font-black tracking-tight text-amber-100 sm:text-5xl md:text-6xl">
+            <h1 className="mt-4 text-3xl font-black tracking-tight text-amber-100 sm:text-5xl md:text-6xl">
               Play The Pool.
               <br />
               Win Better Gear.
@@ -61,7 +61,7 @@ export default async function Home() {
               >
                 Enter Gamble Pool
               </Link>
-              <div className="grid grid-cols-2 gap-2">
+            <div className="grid gap-2 sm:grid-cols-2">
                 <Link
                   href="/profile"
                   className="rounded-lg border border-zinc-600 bg-zinc-900 px-3 py-2 text-center text-sm font-semibold text-zinc-100 hover:border-zinc-400"
@@ -110,7 +110,7 @@ export default async function Home() {
 
       <section className="border-b border-white/10 px-4 py-16 sm:px-6">
         <div className="mx-auto max-w-6xl">
-          <h2 className="mb-10 text-center text-3xl font-bold text-amber-200 sm:text-4xl">How It Works</h2>
+          <h2 className="mb-10 text-center text-2xl font-bold text-amber-200 sm:text-4xl">How It Works</h2>
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {[{
               title: "List Your Items",
@@ -139,7 +139,7 @@ export default async function Home() {
 
       <section className="border-t border-white/10 px-4 py-12 sm:px-6">
         <div className="mx-auto max-w-3xl rounded-xl border border-zinc-800 bg-zinc-900/70 p-6 text-center">
-          <h3 className="text-2xl font-semibold text-white">Safe and Local</h3>
+          <h3 className="text-xl font-semibold text-white sm:text-2xl">Safe and Local</h3>
           <p className="mt-2 text-zinc-400">
             All transactions stay within the Las Vegas community. Meet in public
             places and verify items before exchange.

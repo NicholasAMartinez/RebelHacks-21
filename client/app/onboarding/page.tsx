@@ -103,10 +103,10 @@ export default function OnboardingPage() {
   }, [router]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-red-900 via-black to-red-900 text-white">
-      <main className="mx-auto max-w-2xl p-6">
+    <div className="flex min-h-screen items-center justify-center bg-gradient-to-b from-red-900 via-black to-red-900 px-4 py-8 text-white">
+      <main className="mx-auto w-full max-w-2xl">
         <div className="rounded-lg bg-neutral-900/90 p-6 shadow-xl border border-yellow-500">
-          <h1 className="text-3xl font-bold">Welcome to Potzi</h1>
+          <h1 className="text-2xl font-bold sm:text-3xl">Welcome to Potzi</h1>
           <p className="mt-3 text-neutral-200">
             Thanks for joining — this is a community item marketplace and pool. Please read and
             agree to the community rules before using the site. You will not be able to navigate
@@ -124,7 +124,7 @@ export default function OnboardingPage() {
             </ol>
           </section>
 
-          <div className="mt-6 flex items-center gap-3">
+          <div className="mt-6 flex items-start gap-3">
             <label className="flex items-center gap-3">
               <input
                 type="checkbox"

@@ -127,14 +127,14 @@ export default function TradesPage() {
       <main className="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6">
         <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
           <div>
-            <h1 className="text-3xl font-bold text-amber-200">Trade Requests</h1>
+            <h1 className="text-2xl font-bold text-amber-200 sm:text-3xl">Trade Requests</h1>
             <p className="mt-1 text-sm text-zinc-400">
               When both users accept, complete the exchange at <span className="font-semibold text-amber-300">Central PD</span>.
             </p>
           </div>
           <Link
             href="/pool"
-            className="rounded-lg border border-amber-400/70 bg-amber-300 px-4 py-2 text-sm font-semibold text-black hover:bg-amber-200"
+            className="w-full rounded-lg border border-amber-400/70 bg-amber-300 px-4 py-2 text-center text-sm font-semibold text-black hover:bg-amber-200 sm:w-auto"
           >
             Start New Gamble
           </Link>
@@ -184,7 +184,7 @@ export default function TradesPage() {
 
                 <div className="mt-3 text-xs text-zinc-400">
                   <p>Created: {formatDate(trade.createdAt)}</p>
-                  <p>
+                  <p className="break-words">
                     Approvals: requester {trade.requesterApproved ? "accepted" : "waiting"} | recipient {trade.recipientApproved ? "accepted" : "waiting"}
                   </p>
                   {accepted ? <p className="text-emerald-300">Meet at {trade.meetupLocation} to finish the swap.</p> : null}

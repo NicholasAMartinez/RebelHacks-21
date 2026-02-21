@@ -109,22 +109,22 @@ export default async function WonItemsPage() {
     <div className="page-shell">
       <VegasHeader />
 
-      <main className="mx-auto max-w-6xl px-4 py-8">
+      <main className="mx-auto max-w-6xl px-4 py-8 sm:px-6">
         <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
           <div>
-            <h1 className="text-4xl font-bold text-amber-200">Won Items</h1>
+            <h1 className="text-3xl font-bold text-amber-200 sm:text-4xl">Won Items</h1>
             <p className="mt-2 text-gray-400">Items you have won from gamble spins.</p>
           </div>
           <div className="flex flex-wrap gap-3">
             <Link
               href="/profile"
-              className="rounded-lg bg-gray-800 px-4 py-2 font-semibold text-white transition-colors hover:bg-gray-700"
+              className="w-full rounded-lg bg-gray-800 px-4 py-2 text-center font-semibold text-white transition-colors hover:bg-gray-700 sm:w-auto"
             >
               Back to Profile
             </Link>
             <Link
               href="/pool"
-              className="rounded-lg bg-yellow-400 px-4 py-2 font-semibold text-black transition-colors hover:bg-yellow-300"
+              className="w-full rounded-lg bg-yellow-400 px-4 py-2 text-center font-semibold text-black transition-colors hover:bg-yellow-300 sm:w-auto"
             >
               Gamble
             </Link>
