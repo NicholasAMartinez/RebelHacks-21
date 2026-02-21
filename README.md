@@ -95,3 +95,8 @@ cd server
 npm start
 ```
 
+Judge info just make a fake account
+Judgex
+judgex@test.com
+password123
+password123

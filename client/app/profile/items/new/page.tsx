@@ -204,7 +204,7 @@ export default async function AddItemPage() {
           <div className="grid gap-5 md:grid-cols-2">
             <div>
               <label htmlFor="estimatedValue" className="mb-2 block text-sm font-semibold text-zinc-200">
-                Estimated Value (coins)
+                Estimated Value ($)
               </label>
               <input
                 id="estimatedValue"

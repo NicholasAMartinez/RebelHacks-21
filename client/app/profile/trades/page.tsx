@@ -49,7 +49,7 @@ function ItemPreview({ label, item }: { label: string; item: TradeItem | null })
       {item ? (
         <>
           <p className="mt-1 font-semibold text-white">{item.name}</p>
-          <p className="text-sm text-zinc-300">🪙 {item.price} coins</p>
+          <p className="text-sm text-zinc-300">${item.price}</p>
         </>
       ) : (
         <p className="mt-1 text-sm text-zinc-400">Item unavailable.</p>
