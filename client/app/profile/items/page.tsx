@@ -23,22 +23,30 @@ export default async function MyItemsPage() {
     .maybeSingle();
 
   const displayName = profile?.name || fallbackUsername;
-  const { data: itemRows } = await supabase
-    .from("items")
-    .select("*")
-    .eq("user_id", user.id)
-    .order("item_id", { ascending: false });
-  const myItems = (itemRows ?? []).map((row) => mapRowToItem(row));
 
+  const { data: itemRows } = await supabase.from("items").select("*");
+  const myItems = (itemRows ?? [])
+    .map((row) =>
+      mapRowToItem({
+        ...row,
+        owner_name: displayName,
+      }),
+    )
+    .filter(
+      (item) =>
+        item.ownerId === user.id ||
+        item.ownerName === displayName ||
+        item.ownerName === "You",
+    );
 
   return (
-    <div className="min-h-screen bg-slate-950 text-zinc-100">
+    <div className="page-shell">
       <VegasHeader />
 
       <main className="mx-auto max-w-6xl px-4 py-8 sm:px-6">
         <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
           <div>
-            <h1 className="text-4xl font-bold text-white">My Items</h1>
+            <h1 className="text-4xl font-bold text-amber-200">My Items</h1>
             <p className="mt-2 text-zinc-400">Items currently listed under {displayName}.</p>
           </div>
           <div className="flex flex-wrap gap-3">
