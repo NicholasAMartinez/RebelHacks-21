@@ -28,34 +28,26 @@ export default async function AddItemPage() {
   }
 
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen bg-slate-950 text-zinc-100">
       <VegasHeader />
 
-      <main className="mx-auto max-w-3xl px-4 py-8">
+      <main className="mx-auto max-w-3xl px-4 py-8 sm:px-6">
         <div className="mb-6 flex items-center justify-between gap-4">
           <div>
             <h1 className="text-4xl font-bold text-white">Add Item</h1>
-            <p className="mt-2 text-gray-400">
-              Submit an item to list in your profile.
-            </p>
+            <p className="mt-2 text-zinc-400">Submit an item to list in your profile.</p>
           </div>
           <Link
             href="/profile/items"
-            className="rounded-lg bg-gray-800 px-4 py-2 font-semibold text-white transition-colors hover:bg-gray-700"
+            className="rounded-lg border border-zinc-600 bg-zinc-900 px-4 py-2 font-semibold text-white hover:border-zinc-400"
           >
             Back
           </Link>
         </div>
 
-        <form
-          action={submitItem}
-          className="space-y-5 rounded-lg border border-red-900 bg-gradient-to-r from-gray-900 to-gray-800 p-6"
-        >
+        <form action={submitItem} className="space-y-5 rounded-xl border border-zinc-800 bg-zinc-900/70 p-6">
           <div>
-            <label
-              htmlFor="name"
-              className="mb-2 block text-sm font-semibold text-gray-200"
-            >
+            <label htmlFor="name" className="mb-2 block text-sm font-semibold text-zinc-200">
               Item Name
             </label>
             <input
@@ -63,15 +55,12 @@ export default async function AddItemPage() {
               name="name"
               type="text"
               required
-              className="w-full rounded-lg border border-gray-700 bg-black/70 px-4 py-2 text-white outline-none focus:border-yellow-400"
+              className="w-full rounded-lg border border-zinc-700 bg-slate-950 px-4 py-2 text-white outline-none focus:border-amber-300"
             />
           </div>
 
           <div>
-            <label
-              htmlFor="imageUpload"
-              className="mb-2 block text-sm font-semibold text-gray-200"
-            >
+            <label htmlFor="imageUpload" className="mb-2 block text-sm font-semibold text-zinc-200">
               Upload Image
             </label>
             <input
@@ -79,15 +68,12 @@ export default async function AddItemPage() {
               name="imageUpload"
               type="file"
               accept="image/*"
-              className="w-full rounded-lg border border-dashed border-gray-600 bg-black/70 px-4 py-3 text-sm text-gray-200 file:mr-4 file:rounded file:border-0 file:bg-red-700 file:px-3 file:py-2 file:text-sm file:font-semibold file:text-white hover:file:bg-red-600"
+              className="w-full rounded-lg border border-dashed border-zinc-600 bg-slate-950 px-4 py-3 text-sm text-zinc-200 file:mr-4 file:rounded file:border-0 file:bg-zinc-700 file:px-3 file:py-2 file:text-sm file:font-semibold file:text-white hover:file:bg-zinc-600"
             />
           </div>
 
           <div>
-            <label
-              htmlFor="description"
-              className="mb-2 block text-sm font-semibold text-gray-200"
-            >
+            <label htmlFor="description" className="mb-2 block text-sm font-semibold text-zinc-200">
               Description
             </label>
             <textarea
@@ -95,23 +81,20 @@ export default async function AddItemPage() {
               name="description"
               rows={4}
               required
-              className="w-full rounded-lg border border-gray-700 bg-black/70 px-4 py-2 text-white outline-none focus:border-yellow-400"
+              className="w-full rounded-lg border border-zinc-700 bg-slate-950 px-4 py-2 text-white outline-none focus:border-amber-300"
             />
           </div>
 
           <div className="grid gap-5 md:grid-cols-2">
             <div>
-              <label
-                htmlFor="category"
-                className="mb-2 block text-sm font-semibold text-gray-200"
-              >
+              <label htmlFor="category" className="mb-2 block text-sm font-semibold text-zinc-200">
                 Category
               </label>
               <select
                 id="category"
                 name="category"
                 required
-                className="w-full rounded-lg border border-gray-700 bg-black/70 px-4 py-2 text-white outline-none focus:border-yellow-400"
+                className="w-full rounded-lg border border-zinc-700 bg-slate-950 px-4 py-2 text-white outline-none focus:border-amber-300"
               >
                 {categoryOptions.map((option) => (
                   <option key={option} value={option}>
@@ -122,17 +105,14 @@ export default async function AddItemPage() {
             </div>
 
             <div>
-              <label
-                htmlFor="condition"
-                className="mb-2 block text-sm font-semibold text-gray-200"
-              >
+              <label htmlFor="condition" className="mb-2 block text-sm font-semibold text-zinc-200">
                 Condition
               </label>
               <select
                 id="condition"
                 name="condition"
                 required
-                className="w-full rounded-lg border border-gray-700 bg-black/70 px-4 py-2 text-white outline-none focus:border-yellow-400"
+                className="w-full rounded-lg border border-zinc-700 bg-slate-950 px-4 py-2 text-white outline-none focus:border-amber-300"
               >
                 {conditionOptions.map((option) => (
                   <option key={option} value={option}>
@@ -145,10 +125,7 @@ export default async function AddItemPage() {
 
           <div className="grid gap-5 md:grid-cols-2">
             <div>
-              <label
-                htmlFor="estimatedValue"
-                className="mb-2 block text-sm font-semibold text-gray-200"
-              >
+              <label htmlFor="estimatedValue" className="mb-2 block text-sm font-semibold text-zinc-200">
                 Estimated Value ($)
               </label>
               <input
@@ -157,15 +134,12 @@ export default async function AddItemPage() {
                 type="number"
                 min="1"
                 required
-                className="w-full rounded-lg border border-gray-700 bg-black/70 px-4 py-2 text-white outline-none focus:border-yellow-400"
+                className="w-full rounded-lg border border-zinc-700 bg-slate-950 px-4 py-2 text-white outline-none focus:border-amber-300"
               />
             </div>
 
             <div>
-              <label
-                htmlFor="imageUrl"
-                className="mb-2 block text-sm font-semibold text-gray-200"
-              >
+              <label htmlFor="imageUrl" className="mb-2 block text-sm font-semibold text-zinc-200">
                 Image URL
               </label>
               <input
@@ -173,15 +147,12 @@ export default async function AddItemPage() {
                 name="imageUrl"
                 type="url"
                 required
-                className="w-full rounded-lg border border-gray-700 bg-black/70 px-4 py-2 text-white outline-none focus:border-yellow-400"
+                className="w-full rounded-lg border border-zinc-700 bg-slate-950 px-4 py-2 text-white outline-none focus:border-amber-300"
               />
             </div>
           </div>
 
-          <button
-            type="submit"
-            className="w-full rounded-lg bg-red-700 px-6 py-3 font-semibold text-white transition-colors hover:bg-red-600"
-          >
+          <button type="submit" className="w-full rounded-lg bg-red-700 px-6 py-3 font-semibold text-white hover:bg-red-600">
             Submit Item
           </button>
         </form>

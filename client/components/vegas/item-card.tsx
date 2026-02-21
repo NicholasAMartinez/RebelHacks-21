@@ -19,15 +19,15 @@ export function ItemCard({
 }: ItemCardProps) {
   return (
     <article
-      className={`overflow-hidden rounded-lg border-2 bg-gray-900 transition-all ${
+      className={`overflow-hidden rounded-xl border bg-slate-950/80 transition ${
         selected
-          ? "border-yellow-400 shadow-lg shadow-yellow-400/30"
-          : "border-gray-700 hover:border-gray-600"
+          ? "border-amber-300 shadow-lg shadow-amber-300/20"
+          : "border-zinc-800 hover:border-zinc-700"
       }`}
     >
       <div className={`relative overflow-hidden ${compact ? "h-32" : "h-48"}`}>
         <img src={item.imageUrl} alt={item.name} className="h-full w-full object-cover" />
-        <div className="absolute right-2 top-2 rounded bg-black/70 px-2 py-1 text-xs text-yellow-400">
+        <div className="absolute right-2 top-2 rounded-md bg-black/70 px-2 py-1 text-xs font-semibold text-amber-300">
           ${item.price}
         </div>
       </div>
@@ -37,18 +37,18 @@ export function ItemCard({
           {item.name}
         </h3>
         <p
-          className={`mb-3 text-gray-400 ${compact ? "max-h-8 overflow-hidden text-xs" : "min-h-10 text-sm"}`}
+          className={`mb-3 text-zinc-400 ${compact ? "max-h-8 overflow-hidden text-xs" : "min-h-10 text-sm"}`}
         >
           {item.description}
         </p>
 
-        <div className="mb-3 flex items-center gap-4 text-xs text-gray-400 font-bold">
+        <div className="mb-3 flex items-center gap-4 text-xs font-semibold text-zinc-400">
           <span>Condition: {item.condition}</span>
           <span>Owner: {item.ownerName}</span>
         </div>
 
         <div className="flex items-center justify-between gap-2">
-          <span className="rounded bg-red-900/50 px-2 py-1 text-xs text-red-300">
+          <span className="rounded-md border border-zinc-700 bg-zinc-900 px-2 py-1 text-xs text-zinc-300">
             {item.category}
           </span>
 
@@ -60,12 +60,12 @@ export function ItemCard({
                 onSelect?.(item);
               }}
               disabled={disabled}
-              className={`rounded px-4 py-1 text-sm font-semibold transition-colors ${
+              className={`rounded-md px-4 py-1 text-sm font-semibold transition-colors ${
                 selected
-                  ? "bg-yellow-400 text-black"
+                  ? "bg-amber-300 text-black"
                   : disabled
-                  ? "bg-gray-600 text-gray-200 cursor-not-allowed opacity-60"
-                  : "bg-red-700 text-white hover:bg-red-600"
+                    ? "cursor-not-allowed bg-zinc-700 text-zinc-200 opacity-60"
+                    : "bg-red-700 text-white hover:bg-red-600"
               }`}
             >
               {selected ? "Selected" : disabled ? "Locked" : "Select"}

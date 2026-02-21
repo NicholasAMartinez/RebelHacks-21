@@ -6,7 +6,7 @@ type RouletteWheelProps = {
   spinAngle: number;
 };
 
-const colors = ["#7f1d1d", "#991b1b", "#b91c1c", "#dc2626", "#f59e0b", "#7c3aed"];
+const colors = ["#1f2937", "#334155", "#475569", "#7f1d1d", "#b45309", "#312e81"];
 
 function polarToCartesian(cx: number, cy: number, r: number, angleDeg: number) {
   const angleRad = ((angleDeg - 90) * Math.PI) / 180.0;
@@ -33,7 +33,7 @@ export function RouletteWheel({ items, isSpinning, spinAngle }: RouletteWheelPro
 
   return (
     <div className="relative mx-auto h-80 w-80">
-      <div className="absolute inset-0 rounded-full border-8 border-yellow-400 shadow-2xl shadow-yellow-400/30 flex items-center justify-center">
+      <div className="absolute inset-0 flex items-center justify-center rounded-full border-8 border-zinc-300/80 shadow-2xl shadow-black/40">
         <div
           style={{ width: size, height: size }}
           className="relative"
@@ -58,7 +58,7 @@ export function RouletteWheel({ items, isSpinning, spinAngle }: RouletteWheelPro
 
                 return (
                   <g key={item.id}>
-                    <path d={path} fill={colors[index % colors.length]} stroke="#000" strokeWidth={1} />
+                    <path d={path} fill={colors[index % colors.length]} stroke="#020617" strokeWidth={1} />
                     <text
                       x={labelPos.x}
                       y={labelPos.y}
@@ -76,7 +76,7 @@ export function RouletteWheel({ items, isSpinning, spinAngle }: RouletteWheelPro
               })}
 
               {/* center circle */}
-              <circle cx={center} cy={center} r={36} fill="#f59e0b" stroke="#fff" strokeWidth={4} />
+              <circle cx={center} cy={center} r={36} fill="#fbbf24" stroke="#fff" strokeWidth={4} />
               <text x={center} y={center} textAnchor="middle" dominantBaseline="middle" fontSize={22} fontWeight={700} fill="#000">🎰</text>
             </svg>
           </div>
@@ -84,7 +84,7 @@ export function RouletteWheel({ items, isSpinning, spinAngle }: RouletteWheelPro
       </div>
 
       <div className="absolute left-1/2 top-0 z-20 -translate-x-1/2 -translate-y-2">
-        <div className="h-0 w-0 border-l-8 border-r-8 border-t-12 border-l-transparent border-r-transparent border-t-yellow-400" />
+        <div className="h-0 w-0 border-l-8 border-r-8 border-t-12 border-l-transparent border-r-transparent border-t-zinc-200" />
       </div>
     </div>
   );
