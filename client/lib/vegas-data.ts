@@ -58,19 +58,31 @@ function toConditionValue(value: unknown): Item["condition"] {
 }
 
 export function mapRowToItem(row: UnknownItemRow): Item {
-  const rawId = row.id;
+  const rawId = row.item_id ?? row.id;
   const id = typeof rawId === "number" || typeof rawId === "string" ? rawId : String(rawId ?? "");
+  const ownerId = toStringValue(row.user_id ?? row.owner_id ?? row.ownerId, "");
+  const nestedProfile = row.profile;
+  const nestedProfiles = row.profiles;
+  const profileName =
+    typeof nestedProfile === "object" && nestedProfile !== null
+      ? toStringValue((nestedProfile as UnknownItemRow).name)
+      : typeof nestedProfiles === "object" && nestedProfiles !== null
+        ? toStringValue((nestedProfiles as UnknownItemRow).name)
+        : "";
 
   return {
     id,
     name: toStringValue(row.name, "Untitled Item"),
-    description: toStringValue(row.description, ""),
+    description: toStringValue(row.desc ?? row.description, ""),
     price: toNumberValue(row.price, 0),
-    imageUrl: toStringValue(row.image_url ?? row.imageUrl, ""),
+    imageUrl: toStringValue(row.url ?? row.image_url ?? row.imageUrl, ""),
     category: toStringValue(row.category, "Misc"),
     condition: toConditionValue(row.condition),
-    ownerId: toStringValue(row.owner_id ?? row.ownerId, ""),
-    ownerName: toStringValue(row.owner_name ?? row.ownerName, "Unknown"),
+    ownerId,
+    ownerName: toStringValue(
+      row.owner_name ?? row.ownerName ?? row.user_name ?? profileName,
+      ownerId ? `User ${ownerId.slice(0, 8)}` : "Unknown",
+    ),
     availableForGamble: toBooleanValue(row.available_for_gamble ?? row.availableForGamble, true),
   };
 }
