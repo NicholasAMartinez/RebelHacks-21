@@ -96,7 +96,7 @@ export default function PoolPage() {
         </div>
 
         {selectedItems.length > 0 ? (
-          <section className="mb-8 rounded-lg border-2 border-red-900 bg-gradient-to-b from-gray-900 to-gray-800 p-8">
+          <section className="mb-8 rounded-lg border-2 border-red-900 bg-linear-to-b from-gray-900 to-gray-800 p-8">
             <RouletteWheel items={selectedItems} isSpinning={isSpinning} spinAngle={spinAngle} />
 
             <div className="mt-8 text-center">
@@ -129,7 +129,7 @@ export default function PoolPage() {
             </div>
 
             {showResult && result ? (
-              <div className="mt-8 rounded-lg border-2 border-yellow-400 bg-gradient-to-r from-yellow-900/50 to-red-900/50 p-6">
+              <div className="mt-8 rounded-lg border-2 border-yellow-400 bg-linear-to-r from-yellow-900/50 to-red-900/50 p-6">
                 <div className="text-center">
                   <h2 className="mb-2 text-3xl font-bold text-white">Winner!</h2>
                   <p className="mb-4 text-xl text-yellow-400">{result.ownerName} wins all items!</p>
