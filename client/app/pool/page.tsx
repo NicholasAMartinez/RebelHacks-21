@@ -514,7 +514,7 @@ export default function PoolPage() {
 
       <main className="mx-auto max-w-6xl px-4 py-8 sm:px-6">
         <div className="mb-8 text-center">
-          <h1 className="mb-2 text-3xl font-bold text-amber-200 sm:text-4xl">Gamble Zone</h1>
+          <h1 className="mb-2 text-3xl font-bold text-white sm:text-4xl">Gamble <span className="text-primary">Zone</span></h1>
           <p className="text-zinc-400">
             Pick one of your items, spin in its value bracket, and launch a trade request.
           </p>
@@ -523,7 +523,7 @@ export default function PoolPage() {
         {selectedMyItem ? (
           <section className="mb-8 rounded-xl border border-zinc-800 bg-zinc-900/70 p-6 sm:p-8">
             <p className="mb-4 text-center text-zinc-300">
-              Selected stake: <span className="font-semibold text-amber-300">{selectedMyItem.name}</span> ({selectedTier})
+              Selected stake: <span className="font-semibold text-primary">{selectedMyItem.name}</span> ({selectedTier})
             </p>
 
             <RouletteWheel
@@ -543,7 +543,7 @@ export default function PoolPage() {
                   type="button"
                   onClick={handleSpin}
                   disabled={rouletteCandidates.length < 1 || isSpinning}
-                  className="w-full rounded-lg bg-amber-300 px-8 py-3 font-semibold text-black hover:bg-amber-200 disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
+                  className="w-full rounded-lg bg-primary px-8 py-3 font-semibold text-white shadow-[0_0_20px_theme(color.primary/50%)] transition-all hover:bg-primary/90 hover:shadow-[0_0_30px_theme(color.primary/60%)] disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
                 >
                   {isSpinning ? "Spinning..." : "Spin For Trade Match"}
                 </button>
@@ -552,7 +552,7 @@ export default function PoolPage() {
                   <button
                     type="button"
                     onClick={handleReset}
-                    className="w-full rounded-lg border border-zinc-600 bg-zinc-900 px-6 py-3 font-semibold text-white hover:border-zinc-400 sm:w-auto"
+                    className="w-full rounded-lg border border-zinc-700 bg-zinc-800 px-6 py-3 font-semibold text-white transition-colors hover:border-zinc-600 sm:w-auto"
                   >
                     Reset
                   </button>
@@ -561,9 +561,9 @@ export default function PoolPage() {
             </div>
 
             {showResult && result ? (
-              <div className="mt-8 rounded-xl border border-amber-400/60 bg-zinc-900 p-6">
+              <div className="mt-8 rounded-xl border border-primary/60 bg-zinc-900 p-6 shadow-[0_0_30px_theme(color.primary/30%)]">
                 <div className="text-center">
-                  <h2 className="mb-2 text-2xl font-bold text-amber-200 sm:text-3xl">Trade Match Found</h2>
+                  <h2 className="mb-2 text-2xl font-bold text-primary sm:text-3xl">Trade Match Found</h2>
                   <p className="mb-2 text-zinc-300">Your item matched with {result.ownerName}'s item.</p>
                   <p className="mb-4 text-sm text-zinc-400">
                     Trade stays pending until both users accept. Meetup location: Central PD.
@@ -600,7 +600,7 @@ export default function PoolPage() {
                         Fair Spin Proof
                       </p>
                       <p className="mt-1 text-sm text-zinc-200">
-                        Proof ID: <span className="break-all font-mono text-amber-200">{spinProofSummary.proofId}</span>
+                        Proof ID: <span className="break-all font-mono text-primary">{spinProofSummary.proofId}</span>
                       </p>
                       {spinProofSummary.error ? (
                         <p className="mt-2 text-sm text-red-200">
@@ -627,7 +627,7 @@ export default function PoolPage() {
         ) : null}
 
         <section>
-          <h2 className="mb-4 text-xl font-bold text-rose-200 sm:text-2xl">Step 1: Select One Of Your Items</h2>
+          <h2 className="mb-4 text-xl font-bold text-white sm:text-2xl">Step 1: Select One Of Your Items</h2>
 
           {notice ? (
             <div className="mb-4 rounded-lg border border-red-500/50 bg-red-950/50 px-4 py-2 text-sm text-red-200">
@@ -638,9 +638,9 @@ export default function PoolPage() {
           {isLoading ? (
             <p className="py-16 text-center text-lg text-zinc-400">Loading items...</p>
           ) : myItems.length === 0 ? (
-            <p className="rounded-lg border border-dashed border-zinc-700 bg-slate-950 p-4 text-sm text-zinc-400">
+            <div className="rounded-lg border border-dashed border-zinc-700 bg-zinc-900/50 p-4 text-sm text-zinc-400">
               You have no items to gamble. Add one from your profile first.
-            </p>
+            </div>
           ) : (
             <div className="space-y-8">
               {myItemsByTier.map(({ tier, items: itemsInTier }) => {
@@ -677,12 +677,12 @@ export default function PoolPage() {
           <section className="mt-8 rounded-xl border border-zinc-800 bg-zinc-900/60 p-5">
             <h2 className="mb-3 text-lg font-semibold text-white sm:text-xl">Step 2: Bracket Roulette Pool</h2>
             <p className="mb-4 text-sm text-zinc-400">
-              This wheel contains items from other users in <span className="font-semibold text-amber-300">{selectedTier}</span>.
+              This wheel contains items from other users in <span className="font-semibold text-primary">{selectedTier}</span>.
             </p>
             {rouletteCandidates.length === 0 ? (
-              <p className="rounded-lg border border-dashed border-zinc-700 bg-slate-950 p-4 text-sm text-zinc-400">
+              <div className="rounded-lg border border-dashed border-zinc-700 bg-zinc-900/50 p-4 text-sm text-zinc-400">
               No other users currently have items in this value bracket.
-              </p>
+              </div>
             ) : (
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                 {rouletteCandidates.map((item) => (
@@ -700,7 +700,7 @@ export default function PoolPage() {
           </p>
 
           {otherUsersItems.length === 0 ? (
-            <p className="rounded-lg border border-dashed border-zinc-700 bg-slate-950 p-4 text-sm text-zinc-400">
+            <p className="rounded-lg border border-dashed border-zinc-700 bg-zinc-900/50 p-4 text-sm text-zinc-400">
               No available opponent items are listed right now.
             </p>
           ) : (
@@ -709,8 +709,8 @@ export default function PoolPage() {
                 if (tierItems.length === 0) return null;
 
                 return (
-                  <div key={`available-${tier.key}`} className="rounded-lg border border-zinc-800 bg-slate-950/70 p-4">
-                    <h3 className="mb-3 text-base font-semibold text-amber-200">
+                  <div key={`available-${tier.key}`} className="rounded-lg border border-zinc-800 bg-zinc-900/70 p-4">
+                    <h3 className="mb-3 text-base font-semibold text-white">
                       {tier.key} ({tierItems.length})
                     </h3>
                     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">

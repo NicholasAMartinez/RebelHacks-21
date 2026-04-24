@@ -287,21 +287,21 @@ export default async function ProfilePage() {
         <section className="rounded-xl border border-zinc-800 bg-zinc-900/70 p-6 sm:p-8">
           <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
             <div className="flex items-center gap-4 sm:gap-6">
-              <div className="flex h-16 w-16 items-center justify-center rounded-xl bg-amber-300 text-2xl font-black text-black sm:h-20 sm:w-20 sm:text-3xl">
+              <div className="flex h-16 w-16 items-center justify-center rounded-xl bg-primary text-2xl font-black text-white sm:h-20 sm:w-20 sm:text-3xl">
                 {initials}
               </div>
               <div className="min-w-0">
-                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-amber-300/80">
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary/80">
                   Player Profile
                 </p>
-                <h1 className="mt-1 text-2xl font-bold text-rose-200 sm:text-3xl">
+                <h1 className="mt-1 text-2xl font-bold text-white sm:text-3xl">
                   {displayName}
                 </h1>
                 <p className="mt-1 break-all text-sm text-zinc-300 sm:text-base">{user.email}</p>
               </div>
             </div>
 
-            <div className="max-w-full break-all rounded-xl border border-zinc-700 bg-slate-950 px-4 py-3 text-xs text-zinc-400 sm:text-sm">
+            <div className="max-w-full break-all rounded-xl border border-zinc-700 bg-zinc-900 px-4 py-3 text-xs text-zinc-400 sm:text-sm">
               <span className="font-semibold text-zinc-300">User ID:</span> {user.id}
             </div>
           </div>
@@ -309,18 +309,18 @@ export default async function ProfilePage() {
 
         <section className="grid gap-4 sm:grid-cols-3">
           <div className="rounded-xl border border-zinc-800 bg-zinc-900/70 p-5">
-            <p className="text-xs uppercase tracking-[0.18em] text-zinc-500">Name</p>
+            <p className="text-xs uppercase tracking-[0.18em] text-zinc-400">Name</p>
             <p className="mt-2 truncate text-lg font-semibold text-white sm:text-xl">
               {displayName}
             </p>
           </div>
           <div className="rounded-xl border border-zinc-800 bg-zinc-900/70 p-5">
-            <p className="text-xs uppercase tracking-[0.18em] text-zinc-500">Wins</p>
-            <p className="mt-2 text-2xl font-bold text-emerald-400">{wins}</p>
+            <p className="text-xs uppercase tracking-[0.18em] text-zinc-400">Wins</p>
+            <p className="mt-2 text-2xl font-bold text-primary">{wins}</p>
           </div>
           <div className="rounded-xl border border-zinc-800 bg-zinc-900/70 p-5">
-            <p className="text-xs uppercase tracking-[0.18em] text-zinc-500">Total Bets</p>
-            <p className="mt-2 text-2xl font-bold text-amber-300">{totalBets}</p>
+            <p className="text-xs uppercase tracking-[0.18em] text-zinc-400">Total Bets</p>
+            <p className="mt-2 text-2xl font-bold text-secondary">{totalBets}</p>
           </div>
         </section>
 
@@ -335,25 +335,25 @@ export default async function ProfilePage() {
             <div className="flex flex-wrap gap-2">
               <Link
                 href="/profile/items"
-                className="w-full rounded-lg border border-zinc-600 bg-zinc-900 px-4 py-2 text-center text-sm font-semibold text-white hover:border-zinc-400 sm:w-auto"
+                className="w-full rounded-lg border border-zinc-700 bg-zinc-800 px-4 py-2 text-center text-sm font-semibold text-white transition-colors hover:border-zinc-600 sm:w-auto"
               >
                 All
               </Link>
               <Link
                 href="/profile/trades"
-                className="w-full rounded-lg border border-blue-500/60 bg-blue-700 px-4 py-2 text-center text-sm font-semibold text-white hover:bg-blue-600 sm:w-auto"
+                className="w-full rounded-lg border border-secondary/60 bg-secondary px-4 py-2 text-center text-sm font-semibold text-white transition-colors hover:bg-secondary/90 sm:w-auto"
               >
                 Trade Requests
               </Link>
               <Link
                 href="/profile/won"
-                className="w-full rounded-lg border border-amber-400/70 bg-amber-300 px-4 py-2 text-center text-sm font-semibold text-black hover:bg-amber-200 sm:w-auto"
+                className="w-full rounded-lg bg-primary px-4 py-2 text-center text-sm font-semibold text-white shadow-[0_0_20px_theme(color.primary/40%)] transition-all hover:bg-primary/90 sm:w-auto"
               >
                 Won Items
               </Link>
               <Link
                 href="/profile/items/new"
-                className="w-full rounded-lg border border-red-500/70 bg-red-700 px-4 py-2 text-center text-sm font-semibold text-white hover:bg-red-600 sm:w-auto"
+                className="w-full rounded-lg bg-emerald-600 px-4 py-2 text-center text-sm font-semibold text-white transition-colors hover:bg-emerald-500 sm:w-auto"
               >
                 Add New Item
               </Link>
@@ -361,7 +361,7 @@ export default async function ProfilePage() {
           </div>
 
           {myItems.length === 0 ? (
-            <p className="rounded-lg border border-dashed border-zinc-700 bg-slate-950 p-4 text-sm text-zinc-400">
+            <p className="rounded-lg border border-dashed border-zinc-700 bg-zinc-900/50 p-4 text-sm text-zinc-400">
               No items listed yet.
             </p>
           ) : (
@@ -387,19 +387,19 @@ export default async function ProfilePage() {
             <div className="flex flex-wrap gap-2">
               <Link
                 href="/profile/trades"
-                className="w-full rounded-lg border border-blue-500/60 bg-blue-700 px-4 py-2 text-center text-sm font-semibold text-white hover:bg-blue-600 sm:w-auto"
+                className="w-full rounded-lg border border-secondary/60 bg-secondary px-4 py-2 text-center text-sm font-semibold text-white transition-colors hover:bg-secondary/90 sm:w-auto"
               >
                 Trade Requests
               </Link>
               <Link
                 href="/profile/won"
-                className="w-full rounded-lg border border-zinc-600 bg-zinc-900 px-4 py-2 text-center text-sm font-semibold text-white hover:border-zinc-400 sm:w-auto"
+                className="w-full rounded-lg border border-zinc-700 bg-zinc-800 px-4 py-2 text-center text-sm font-semibold text-white transition-colors hover:border-zinc-600 sm:w-auto"
               >
                 View All Won Items
               </Link>
               <Link
                 href="/pool"
-                className="w-full rounded-lg border border-amber-400/70 bg-amber-300 px-4 py-2 text-center text-sm font-semibold text-black hover:bg-amber-200 sm:w-auto"
+                className="w-full rounded-lg bg-primary px-4 py-2 text-center text-sm font-semibold text-white shadow-[0_0_20px_theme(color.primary/40%)] transition-all hover:bg-primary/90 sm:w-auto"
               >
                 Gamble
               </Link>
@@ -407,7 +407,7 @@ export default async function ProfilePage() {
           </div>
 
           {wonItems.length === 0 ? (
-            <p className="rounded-lg border border-dashed border-zinc-700 bg-slate-950 p-4 text-sm text-zinc-400">
+            <p className="rounded-lg border border-dashed border-zinc-700 bg-zinc-900/50 p-4 text-sm text-zinc-400">
               No won items yet.
             </p>
           ) : (

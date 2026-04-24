@@ -9,6 +9,39 @@ import { createClient } from "@/lib/supabase/client";
 const FEATURED_ITEMS_CACHE_KEY = "potzi.home.featured-items.v1";
 const FEATURED_ITEMS_CACHE_TTL_MS = 2 * 60 * 1000;
 
+const placeholderItems: Item[] = [
+  {
+    id: "1",
+    name: "Cool Neon Sign",
+    description: "A very cool neon sign for your room.",
+    price: 150,
+    imageUrl: "https://images.unsplash.com/photo-1583012431834-75BCDced6a44?w=500&h=500&fit=crop",
+    category: "Decor",
+    condition: "Used",
+    ownerName: "Player1",
+  },
+  {
+    id: "2",
+    name: "Vintage Arcade Machine",
+    description: "A classic arcade machine from the 80s.",
+    price: 2500,
+    imageUrl: "https://images.unsplash.com/photo-1550745165-9bc0b252726a?w=500&h=500&fit=crop",
+    category: "Electronics",
+    condition: "Used",
+    ownerName: "Player2",
+  },
+  {
+    id: "3",
+    name: "Signed Poker Set",
+    description: "A poker set signed by a famous player.",
+    price: 500,
+    imageUrl: "https://images.unsplash.com/photo-1541447232379-6a3a96752f99?w=500&h=500&fit=crop",
+    category: "Collectibles",
+    condition: "New",
+    ownerName: "Player3",
+  },
+];
+
 type FeaturedItemsCachePayload = {
   savedAt: number;
   items: Item[];
@@ -47,8 +80,8 @@ function writeFeaturedItemsCache(items: Item[]) {
 }
 
 export function FeaturedItemsSection() {
-  const [featuredItems, setFeaturedItems] = useState<Item[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [featuredItems, setFeaturedItems] = useState<Item[]>(placeholderItems);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const supabase = createClient();
@@ -72,7 +105,7 @@ export function FeaturedItemsSection() {
         .limit(18);
 
       if (error) {
-        setFeaturedItems([]);
+        setFeaturedItems(placeholderItems);
         setIsLoading(false);
         return;
       }
@@ -110,8 +143,10 @@ export function FeaturedItemsSection() {
         )
         .slice(0, 3);
 
-      setFeaturedItems(mapped);
-      writeFeaturedItemsCache(mapped);
+      if (mapped.length > 0) {
+        setFeaturedItems(mapped);
+        writeFeaturedItemsCache(mapped);
+      }
       setIsLoading(false);
     };
 
@@ -122,8 +157,8 @@ export function FeaturedItemsSection() {
     <section className="px-4 py-16 sm:px-6">
       <div className="mx-auto max-w-6xl">
         <div className="mb-8 flex flex-wrap items-end justify-between gap-3">
-          <h2 className="text-2xl font-bold text-amber-200 sm:text-4xl">Featured Items</h2>
-          <Link href="/profile/items/new" className="text-sm font-semibold text-amber-300 hover:text-amber-200">
+          <h2 className="text-2xl font-bold text-white sm:text-4xl">Featured Items</h2>
+          <Link href="/profile/items/new" className="text-sm font-semibold text-primary hover:text-primary/90">
             Add your item
           </Link>
         </div>

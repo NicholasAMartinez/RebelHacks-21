@@ -34,15 +34,15 @@ export function ItemCard({
 }: ItemCardProps) {
   return (
     <article
-      className={`overflow-hidden rounded-xl border bg-slate-950/80 transition ${
+      className={`overflow-hidden rounded-xl border bg-zinc-900/70 transition-all duration-300 ${
         selected
-          ? "border-amber-300 shadow-lg shadow-amber-300/20"
-          : "border-zinc-800 hover:border-zinc-700"
+          ? "border-primary shadow-lg shadow-primary/20"
+          : "border-zinc-800 hover:border-zinc-700 hover:shadow-2xl"
       }`}
     >
       <div className={`relative overflow-hidden ${compact ? "h-32" : "h-48"}`}>
         <img src={item.imageUrl || "/file.svg"} alt={item.name} className="h-full w-full object-cover" />
-        <div className="absolute right-2 top-2 rounded-md bg-black/70 px-2 py-1 text-xs font-semibold text-amber-300">
+        <div className="absolute right-2 top-2 rounded-md bg-black/70 px-2 py-1 text-xs font-semibold text-white">
           ${item.price}
         </div>
       </div>
@@ -63,7 +63,7 @@ export function ItemCard({
         </div>
 
         <div className="flex flex-wrap items-center justify-between gap-2">
-          <span className="rounded-md border border-zinc-700 bg-zinc-900 px-2 py-1 text-xs text-zinc-300">
+          <span className="rounded-md border border-zinc-700 bg-zinc-800 px-2 py-1 text-xs text-zinc-300">
             {item.category}
           </span>
 
@@ -79,10 +79,10 @@ export function ItemCard({
                   disabled={disabled}
                   className={`rounded-md px-4 py-1 text-sm font-semibold transition-colors ${
                     selected
-                      ? "bg-amber-300 text-black"
+                      ? "bg-primary text-white"
                       : disabled
-                        ? "cursor-not-allowed bg-zinc-700 text-zinc-200 opacity-60"
-                        : "bg-red-700 text-white hover:bg-red-600"
+                        ? "cursor-not-allowed bg-zinc-700 text-zinc-400 opacity-60"
+                        : "bg-secondary text-white hover:bg-secondary/90"
                   }`}
                 >
                   {selected ? "Selected" : disabled ? "Locked" : "Select"}
@@ -95,8 +95,8 @@ export function ItemCard({
                     href={editHref}
                     className={`rounded-md px-3 py-1 text-sm font-semibold transition-colors ${
                       editDisabled
-                        ? "pointer-events-none cursor-not-allowed bg-zinc-700 text-zinc-200 opacity-60"
-                        : "bg-amber-300 text-black hover:bg-amber-200"
+                        ? "pointer-events-none cursor-not-allowed bg-zinc-700 text-zinc-400 opacity-60"
+                        : "bg-primary text-white hover:bg-primary/90"
                     }`}
                     aria-disabled={editDisabled}
                   >
@@ -112,8 +112,8 @@ export function ItemCard({
                     disabled={editDisabled}
                     className={`rounded-md px-3 py-1 text-sm font-semibold transition-colors ${
                       editDisabled
-                        ? "cursor-not-allowed bg-zinc-700 text-zinc-200 opacity-60"
-                        : "bg-amber-300 text-black hover:bg-amber-200"
+                        ? "cursor-not-allowed bg-zinc-700 text-zinc-400 opacity-60"
+                        : "bg-primary text-white hover:bg-primary/90"
                     }`}
                   >
                     Edit
@@ -131,8 +131,8 @@ export function ItemCard({
                   disabled={removeDisabled}
                   className={`rounded-md px-3 py-1 text-sm font-semibold transition-colors ${
                     removeDisabled
-                      ? "cursor-not-allowed bg-zinc-700 text-zinc-200 opacity-60"
-                      : "bg-zinc-200 text-black hover:bg-white"
+                      ? "cursor-not-allowed bg-zinc-700 text-zinc-400 opacity-60"
+                      : "bg-zinc-600 text-white hover:bg-zinc-500"
                   }`}
                 >
                   Remove

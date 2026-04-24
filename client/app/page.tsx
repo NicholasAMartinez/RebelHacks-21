@@ -10,31 +10,17 @@ export default async function Home() {
       <VegasHeader />
 
       <section className="relative overflow-hidden border-b border-white/10">
-        <div className="absolute inset-0 -z-20">
-          <Image
-            src="https://images.unsplash.com/photo-1491252706929-a72754910041?auto=format&fit=crop&w=1600&q=60&fm=webp"
-            alt="Vegas background"
-            fill
-            sizes="100vw"
-            quality={55}
-            style={{ objectFit: "cover" }}
-            priority
-            placeholder="blur"
-            blurDataURL="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='9' viewBox='0 0 16 9'><rect width='16' height='9' fill='%230f1724'/></svg>"
-          />
-        </div>
-        <div className="absolute inset-0 bg-black/65" />
         <div className="relative mx-auto grid w-full max-w-6xl gap-8 px-4 py-12 sm:px-6 sm:py-14 lg:grid-cols-[minmax(0,1fr)_360px] lg:items-center">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-amber-300">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
               Vegas Community Swap
             </p>
-            <h1 className="mt-4 text-3xl font-black tracking-tight text-amber-100 sm:text-5xl md:text-6xl">
+            <h1 className="mt-4 text-3xl font-black tracking-tight text-white sm:text-5xl md:text-6xl">
               Play The Pool.
               <br />
-              Win Better Gear.
+              <span className="text-primary">Win Better Gear.</span>
             </h1>
-            <p className="mt-5 max-w-2xl text-base text-zinc-200 sm:text-lg">
+            <p className="mt-5 max-w-2xl text-base text-zinc-300 sm:text-lg">
               Like a sportsbook board, but for local item value tiers. Enter a
               fair value bracket, spin, and claim a matched trade.
             </p>
@@ -42,7 +28,7 @@ export default async function Home() {
               {["Live Pools 18", "Avg Pot $142", "Max Entries 6"].map((line) => (
                 <span
                   key={line}
-                  className="rounded-full border border-zinc-500 bg-black/50 px-3 py-1 text-xs font-semibold text-zinc-100"
+                  className="rounded-full border border-zinc-700 bg-zinc-800/50 px-3 py-1 text-xs font-semibold text-zinc-200"
                 >
                   {line}
                 </span>
@@ -50,34 +36,34 @@ export default async function Home() {
             </div>
           </div>
 
-          <div className="rounded-2xl border border-zinc-700 bg-zinc-950/90 p-4 shadow-2xl shadow-black/40">
+          <div className="rounded-2xl border border-zinc-800 bg-zinc-900/80 p-4 shadow-2xl shadow-black/40 backdrop-blur-sm">
             <p className="mb-3 text-xs font-semibold uppercase tracking-[0.16em] text-zinc-400">
               Action Board
             </p>
             <div className="space-y-2">
               <Link
                 href="/pool"
-                className="block rounded-lg bg-amber-300 px-4 py-3 text-center text-base font-extrabold text-black hover:bg-amber-200"
+                className="block rounded-lg bg-primary px-4 py-3 text-center text-base font-extrabold text-white shadow-[0_0_20px_theme(color.primary/50%)] transition-all hover:bg-primary/90 hover:shadow-[0_0_30px_theme(color.primary/60%)]"
               >
                 Enter Gamble Pool
               </Link>
             <div className="grid gap-2 sm:grid-cols-2">
                 <Link
                   href="/profile"
-                  className="rounded-lg border border-zinc-600 bg-zinc-900 px-3 py-2 text-center text-sm font-semibold text-zinc-100 hover:border-zinc-400"
+                  className="rounded-lg border border-zinc-700 bg-zinc-800 px-3 py-2 text-center text-sm font-semibold text-zinc-100 transition-colors hover:border-zinc-500"
                 >
                   My Profile
                 </Link>
                 <Link
                   href="/profile/items/new"
-                  className="rounded-lg border border-red-500/70 bg-red-700 px-3 py-2 text-center text-sm font-semibold text-white hover:bg-red-600"
+                  className="rounded-lg border border-secondary/70 bg-secondary px-3 py-2 text-center text-sm font-semibold text-white transition-colors hover:bg-secondary/90"
                 >
                   List Item
                 </Link>
               </div>
               <Link
                 href="/info"
-                className="block rounded-lg border border-zinc-700 px-3 py-2 text-center text-sm font-semibold text-zinc-300 hover:bg-white/5"
+                className="block rounded-lg border border-zinc-800 px-3 py-2 text-center text-sm font-semibold text-zinc-300 transition-colors hover:bg-white/5"
               >
                 Rules and Safety
               </Link>
@@ -90,7 +76,7 @@ export default async function Home() {
               <div className="mt-2 space-y-1.5 text-sm">
                 <p className="flex items-center justify-between text-zinc-200">
                   <span>$25-$50 Tier</span>
-                  <span className="font-bold text-emerald-300">Hot</span>
+                  <span className="font-bold text-emerald-400">Hot</span>
                 </p>
                 <p className="flex items-center justify-between text-zinc-300">
                   <span>$75-$100 Tier</span>
@@ -105,12 +91,13 @@ export default async function Home() {
           </div>
         </div>
       </section>
+      <div className="absolute inset-0 -z-10 h-full w-full bg-background bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[-100px_100px] [background-size:4px_4px]"></div>
 
       <ImpactStatsStrip />
 
       <section className="border-b border-white/10 px-4 py-16 sm:px-6">
         <div className="mx-auto max-w-6xl">
-          <h2 className="mb-10 text-center text-2xl font-bold text-amber-200 sm:text-4xl">How It Works</h2>
+          <h2 className="mb-10 text-center text-2xl font-bold text-white sm:text-4xl">How It Works</h2>
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {[{
               title: "List Your Items",
@@ -126,7 +113,7 @@ export default async function Home() {
               body: "Meet in a public location and verify before exchanging.",
             }].map((step, index) => (
               <article key={step.title} className="rounded-xl border border-zinc-800 bg-zinc-900/70 p-5">
-                <span className="text-sm font-semibold text-amber-300">0{index + 1}</span>
+                <span className="text-sm font-semibold text-primary">0{index + 1}</span>
                 <h3 className="mt-2 text-lg font-semibold text-white">{step.title}</h3>
                 <p className="mt-2 text-sm text-zinc-400">{step.body}</p>
               </article>

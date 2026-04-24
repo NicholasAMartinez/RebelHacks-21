@@ -1,12 +1,12 @@
-# Potzi
+# Potzi - Vegas Neon Edition
+
+This is a full-stack trading demo built with a Next.js client and an Express server, now with a brand new "Vegas Neon" theme.
 
 For the easiest experince just go to the website where it is hosted: https://www.potzi.vegas/
 If that does not work go to: https://rebel-hacks-21-cgxv.vercel.app/
 You can use the following creditnials if you don't want to make a fake account:
 Username/Email: judge@test.com
 Password: judge@test.com
-
-Full-stack trading demo built with a Next.js client and an Express server.
 
 ## Tech stack
 
@@ -102,29 +102,13 @@ cd server
 npm start
 ```
 
-## Demo account for judges
+## Screenshots
 
-Use a test account (or create one quickly in-app):
+### Homepage
+<img width="1249" height="1108" alt="image" src="https://i.imgur.com/iE6n2Qz.png" />
 
-- Email: `judgex@test.com`
-- Password: `password123`
+### Pool Page
+<img width="1189" height="779" alt="image" src="https://i.imgur.com/7v8J3X4.png" />
 
-## Screenshots / Pictures
-
-Add your screenshots to this repository and keep this section updated before final judging.
-
-Suggested files:
-
-- `docs/screenshots/home.png`
-- `docs/screenshots/profile.png`
-- `docs/screenshots/trades.png`
-
-Example embed format:
-
-
-<img width="1249" height="1108" alt="image" src="https://github.com/user-attachments/assets/0e918c27-c01d-4753-ae2a-c511395000ee" />
-
-<img width="1189" height="779" alt="image" src="https://github.com/user-attachments/assets/e5b1f434-6070-43d0-8d8b-5ba5805429db" />
-
-<img width="1159" height="1061" alt="image" src="https://github.com/user-attachments/assets/60a956b1-3cdc-498c-a4ef-e2e9e0f8c110" />
-
+### Profile Page
+<img width="1159" height="1061" alt="image" src="https://i.imgur.com/C7Y1i2j.png" />

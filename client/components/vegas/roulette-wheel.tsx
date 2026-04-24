@@ -7,7 +7,7 @@ type RouletteWheelProps = {
   spinDurationMs?: number;
 };
 
-const colors = ["#1f2937", "#334155", "#475569", "#7f1d1d", "#b45309", "#312e81"];
+const colors = ["#ec4899", "#3b82f6", "#8b5cf6", "#10b981", "#f59e0b", "#ef4444"];
 
 function polarToCartesian(cx: number, cy: number, r: number, angleDeg: number) {
   const angleRad = ((angleDeg - 90) * Math.PI) / 180.0;
@@ -41,7 +41,7 @@ export function RouletteWheel({
 
   return (
     <div className="relative mx-auto aspect-square w-full max-w-[20rem]">
-      <div className="absolute inset-0 flex items-center justify-center rounded-full border-8 border-zinc-300/80 shadow-2xl shadow-black/40">
+      <div className="absolute inset-0 flex items-center justify-center rounded-full border-8 border-zinc-700/80 shadow-2xl shadow-black/40">
         <div
           className="relative h-full w-full"
         >
@@ -64,7 +64,7 @@ export function RouletteWheel({
 
                 return (
                   <g key={item.id}>
-                    <path d={path} fill={colors[index % colors.length]} stroke="#020617" strokeWidth={1} />
+                    <path d={path} fill={colors[index % colors.length]} stroke="#111827" strokeWidth={2} />
                     <text
                       x={labelPos.x}
                       y={labelPos.y}
@@ -82,7 +82,7 @@ export function RouletteWheel({
               })}
 
               {/* center circle */}
-              <circle cx={center} cy={center} r={36} fill="#fbbf24" stroke="#fff" strokeWidth={4} />
+              <circle cx={center} cy={center} r={36} fill="#fde047" stroke="#111827" strokeWidth={4} />
               <text x={center} y={center} textAnchor="middle" dominantBaseline="middle" fontSize={22} fontWeight={700} fill="#000">🎰</text>
             </svg>
           </div>
@@ -90,7 +90,7 @@ export function RouletteWheel({
       </div>
 
       <div className="absolute left-1/2 top-0 z-20 -translate-x-1/2 -translate-y-2">
-        <div className="h-0 w-0 border-x-8 border-x-transparent border-t-[12px] border-t-zinc-200" />
+        <div className="h-0 w-0 border-x-8 border-x-transparent border-t-[12px] border-t-primary" />
       </div>
     </div>
   );

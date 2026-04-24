@@ -2,7 +2,6 @@
 
 import React, { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import styles from "./login.module.css";
 
 type Mode = "login" | "register";
 
@@ -37,7 +36,7 @@ export default function LoginForm({
       return;
     }
 
-    if (submittedMode === "register" && (!email || !password)) {
+    if (submittedMode === "register" && !email || !password) {
       setMessage("Please fill email and password.");
       return;
     }
@@ -89,16 +88,18 @@ export default function LoginForm({
   }
 
   return (
-    <div className={styles.authContainer}>
-      <div className={styles.brand}>Potzi</div>
-      <div className={styles.sub}>Choose a mode, then continue.</div>
+    <div className="w-full max-w-md rounded-2xl border border-zinc-800 bg-zinc-900/80 p-6 shadow-2xl shadow-black/40 backdrop-blur-sm sm:p-8">
+      <h1 className="text-2xl font-black tracking-tight text-white">
+        Pot<span className="text-primary">zi</span>
+      </h1>
+      <p className="mt-1 text-sm text-zinc-400">Choose a mode, then continue.</p>
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="mt-6">
         {mode === "login" ? (
-          <div className={styles.field}>
-            <label className={styles.label}>Username or Email</label>
+          <div>
+            <label className="text-sm font-medium text-zinc-300">Username or Email</label>
             <input
-              className={styles.input}
+              className="mt-2 block w-full rounded-lg border border-zinc-700 bg-zinc-900 px-3 py-2 text-white placeholder:text-zinc-500 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
               type="text"
               value={identifier}
               onChange={(e) => setIdentifier(e.target.value)}
@@ -108,10 +109,10 @@ export default function LoginForm({
           </div>
         ) : (
           <>
-            <div className={styles.field}>
-              <label className={styles.label}>Username</label>
+            <div className="mb-4">
+              <label className="text-sm font-medium text-zinc-300">Username</label>
               <input
-                className={styles.input}
+                className="mt-2 block w-full rounded-lg border border-zinc-700 bg-zinc-900 px-3 py-2 text-white placeholder:text-zinc-500 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
                 type="text"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
@@ -120,10 +121,10 @@ export default function LoginForm({
               />
             </div>
 
-            <div className={styles.field}>
-              <label className={styles.label}>Email</label>
+            <div>
+              <label className="text-sm font-medium text-zinc-300">Email</label>
               <input
-                className={styles.input}
+                className="mt-2 block w-full rounded-lg border border-zinc-700 bg-zinc-900 px-3 py-2 text-white placeholder:text-zinc-500 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -134,10 +135,10 @@ export default function LoginForm({
           </>
         )}
 
-        <div className={styles.field}>
-          <label className={styles.label}>Password</label>
+        <div className="mt-4">
+          <label className="text-sm font-medium text-zinc-300">Password</label>
           <input
-            className={styles.input}
+            className="mt-2 block w-full rounded-lg border border-zinc-700 bg-zinc-900 px-3 py-2 text-white placeholder:text-zinc-500 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
@@ -147,10 +148,10 @@ export default function LoginForm({
         </div>
 
         {mode === "register" && (
-          <div className={styles.field}>
-            <label className={styles.label}>Confirm password</label>
+          <div className="mt-4">
+            <label className="text-sm font-medium text-zinc-300">Confirm password</label>
             <input
-              className={styles.input}
+              className="mt-2 block w-full rounded-lg border border-zinc-700 bg-zinc-900 px-3 py-2 text-white placeholder:text-zinc-500 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
               type="password"
               value={confirm}
               onChange={(e) => setConfirm(e.target.value)}
@@ -160,9 +161,13 @@ export default function LoginForm({
           </div>
         )}
 
-        <div className={styles.actions}>
+        <div className="mt-6 flex flex-col gap-3 sm:flex-row">
           <button
-            className={`${styles.btn} ${mode === "login" ? styles.activeCta : styles.secondaryCta}`}
+            className={`w-full rounded-lg py-2.5 text-sm font-semibold transition-colors disabled:cursor-wait disabled:opacity-70 ${
+              mode === "login"
+                ? "bg-primary text-white shadow-[0_0_20px_theme(color.primary/40%)] hover:bg-primary/90"
+                : "border border-zinc-700 bg-zinc-800 text-zinc-300 hover:border-zinc-600"
+            }`}
             type="submit"
             name="authMode"
             value="login"
@@ -172,7 +177,11 @@ export default function LoginForm({
             {loading && mode === "login" ? "Please wait..." : "Sign in"}
           </button>
           <button
-            className={`${styles.btn} ${mode === "register" ? styles.activeCta : styles.secondaryCta}`}
+            className={`w-full rounded-lg py-2.5 text-sm font-semibold transition-colors disabled:cursor-wait disabled:opacity-70 ${
+              mode === "register"
+                ? "bg-primary text-white shadow-[0_0_20px_theme(color.primary/40%)] hover:bg-primary/90"
+                : "border border-zinc-700 bg-zinc-800 text-zinc-300 hover:border-zinc-600"
+            }`}
             type="submit"
             name="authMode"
             value="register"
@@ -183,7 +192,7 @@ export default function LoginForm({
           </button>
         </div>
 
-        {message && <div className={styles.note}>{message}</div>}
+        {message && <div className="mt-4 text-center text-sm text-red-400">{message}</div>}
       </form>
     </div>
   );

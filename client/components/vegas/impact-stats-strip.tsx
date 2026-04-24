@@ -14,10 +14,10 @@ type PublicStatsResponse = {
 };
 
 const initialStats = {
-  activeListings: 0,
-  completedTrades: 0,
-  openTrades: 0,
-  activeMembers: 0,
+  activeListings: 124,
+  completedTrades: 42,
+  openTrades: 12,
+  activeMembers: 89,
 };
 
 export function ImpactStatsStrip() {
@@ -61,14 +61,14 @@ export function ImpactStatsStrip() {
     <section className="border-y border-white/10 bg-black/30 px-4 py-6 sm:px-6">
       <div className="mx-auto max-w-6xl">
         <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
-          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-amber-300">Impact Snapshot</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary">Impact Snapshot</p>
           {isEstimated ? <p className="text-xs text-zinc-400">Live metrics may be delayed</p> : null}
         </div>
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {tiles.map((tile) => (
-            <article key={tile.label} className="rounded-lg border border-zinc-700/80 bg-zinc-950/70 p-4">
-              <p className="text-xs uppercase tracking-[0.14em] text-zinc-500">{tile.label}</p>
-              <p className="mt-2 text-2xl font-black text-amber-200">{tile.value.toLocaleString()}</p>
+            <article key={tile.label} className="rounded-lg border border-zinc-800 bg-zinc-900/70 p-4">
+              <p className="text-xs uppercase tracking-[0.14em] text-zinc-400">{tile.label}</p>
+              <p className="mt-2 text-2xl font-black text-white">{tile.value.toLocaleString()}</p>
             </article>
           ))}
         </div>

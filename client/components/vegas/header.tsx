@@ -4,6 +4,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { Menu, Transition } from "@headlessui/react";
+import { Fragment } from "react";
 
 const navItems = [
   { href: "/", label: "Home" },
@@ -11,6 +13,23 @@ const navItems = [
   { href: "/profile/trades", label: "Trades" },
   { href: "/profile", label: "Profile" },
 ];
+
+function ProfileIcon() {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      className="h-6 w-6"
+    >
+      <path
+        fillRule="evenodd"
+        d="M18.685 19.097A9.723 9.723 0 0 0 21.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 0 0 3.065 7.097A9.716 9.716 0 0 0 12 21.75a9.716 9.716 0 0 0 6.685-2.653Zm-12.54-1.285A7.486 7.486 0 0 1 12 15a7.486 7.486 0 0 1 5.855 2.812A8.224 8.224 0 0 1 12 20.25a8.224 8.224 0 0 1-5.855-2.438ZM15.75 9a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z"
+        clipRule="evenodd"
+      />
+    </svg>
+  );
+}
 
 export function VegasHeader() {
   const pathname = usePathname();
@@ -30,11 +49,11 @@ export function VegasHeader() {
   }
 
   return (
-    <header className="sticky top-0 z-50 border-b border-white/10 bg-slate-950/95 backdrop-blur">
+    <header className="sticky top-0 z-50 border-b border-white/10 bg-background/90 backdrop-blur-sm">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
         <Link href="/" className="flex items-center gap-2 text-white">
           <span className="text-2xl font-black tracking-tight">
-            Pot<span className="text-amber-300">zi</span>
+            Pot<span className="text-primary">zi</span>
           </span>
         </Link>
 
@@ -50,8 +69,8 @@ export function VegasHeader() {
                   href={item.href}
                   className={`rounded-lg px-3 py-2 text-sm font-medium transition-colors md:text-base ${
                     isActive
-                      ? "bg-white/10 text-amber-200"
-                      : "text-zinc-200 hover:bg-white/5"
+                      ? "bg-white/10 text-primary"
+                      : "text-zinc-300 hover:bg-white/5"
                   }`}
                 >
                   {item.label}
@@ -60,59 +79,121 @@ export function VegasHeader() {
             })}
           </nav>
 
-          <details className="relative sm:hidden">
-            <summary className="flex list-none h-10 cursor-pointer items-center justify-center rounded-lg border border-zinc-700 bg-zinc-900 px-3 text-sm font-semibold text-zinc-100 hover:border-zinc-500 [&::-webkit-details-marker]:hidden">
-              Menu
-            </summary>
-            <div className="absolute right-0 mt-2 w-44 rounded-lg border border-zinc-700 bg-zinc-950 p-2 shadow-xl">
-              {navItems.map((item) => {
-                const isActive =
-                  pathname === item.href ||
-                  (item.href !== "/" && pathname.startsWith(item.href));
-                return (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    className={`block rounded-md px-3 py-2 text-sm ${
-                      isActive
-                        ? "bg-white/10 font-semibold text-amber-200"
-                        : "text-zinc-200 hover:bg-white/5"
-                    }`}
-                  >
-                    {item.label}
-                  </Link>
-                );
-              })}
-            </div>
-          </details>
+          <div className="sm:hidden">
+            <Menu as="div" className="relative">
+              <Menu.Button className="flex h-10 w-10 items-center justify-center rounded-lg border border-zinc-700 bg-zinc-900 text-sm font-semibold text-zinc-100 hover:border-zinc-500">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="h-6 w-6"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+                  />
+                </svg>
+              </Menu.Button>
+              <Transition
+                as={Fragment}
+                enter="transition ease-out duration-100"
+                enterFrom="transform opacity-0 scale-95"
+                enterTo="transform opacity-100 scale-100"
+                leave="transition ease-in duration-75"
+                leaveFrom="transform opacity-100 scale-100"
+                leaveTo="transform opacity-0 scale-95"
+              >
+                <Menu.Items className="absolute right-0 mt-2 w-48 origin-top-right rounded-lg border border-zinc-800 bg-zinc-900 shadow-xl">
+                  <div className="p-1">
+                    {navItems.map((item) => {
+                      const isActive =
+                        pathname === item.href ||
+                        (item.href !== "/" && pathname.startsWith(item.href));
+                      return (
+                        <Menu.Item key={item.href}>
+                          {({ active }) => (
+                            <Link
+                              href={item.href}
+                              className={`block w-full rounded-md px-3 py-2 text-left text-sm ${
+                                isActive ? "font-semibold text-primary" : ""
+                              } ${
+                                active ? "bg-white/5 text-white" : "text-zinc-300"
+                              }`}
+                            >
+                              {item.label}
+                            </Link>
+                          )}
+                        </Menu.Item>
+                      );
+                    })}
+                  </div>
+                </Menu.Items>
+              </Transition>
+            </Menu>
+          </div>
 
-          <details className="relative">
-            <summary className="flex list-none h-10 w-10 cursor-pointer items-center justify-center rounded-full border border-zinc-700 bg-zinc-900 text-sm font-bold text-amber-200 hover:border-zinc-500 [&::-webkit-details-marker]:hidden">
-              P
-            </summary>
-            <div className="absolute right-0 mt-2 w-44 rounded-lg border border-zinc-700 bg-zinc-950 p-2 shadow-xl">
-              <Link
-                href="/profile/trades"
-                className="block rounded-md px-3 py-2 text-sm text-zinc-200 hover:bg-white/5"
-              >
-                Trades
-              </Link>
-              <Link
-                href="/profile"
-                className="block rounded-md px-3 py-2 text-sm text-zinc-200 hover:bg-white/5"
-              >
-                Profile
-              </Link>
-              <button
-                type="button"
-                onClick={() => void handleSignOut()}
-                className="mt-1 block w-full rounded-md px-3 py-2 text-left text-sm text-red-300 hover:bg-red-500/10 disabled:opacity-70"
-                disabled={isSigningOut}
-              >
-                {isSigningOut ? "Signing out..." : "Sign out"}
-              </button>
-            </div>
-          </details>
+          <Menu as="div" className="relative">
+            <Menu.Button className="flex h-10 w-10 items-center justify-center rounded-full border border-zinc-700 bg-zinc-900 text-sm font-bold text-primary hover:border-zinc-500">
+              <ProfileIcon />
+            </Menu.Button>
+            <Transition
+              as={Fragment}
+              enter="transition ease-out duration-100"
+              enterFrom="transform opacity-0 scale-95"
+              enterTo="transform opacity-100 scale-100"
+              leave="transition ease-in duration-75"
+              leaveFrom="transform opacity-100 scale-100"
+              leaveTo="transform opacity-0 scale-95"
+            >
+              <Menu.Items className="absolute right-0 mt-2 w-48 origin-top-right rounded-lg border border-zinc-800 bg-zinc-900 shadow-xl">
+                <div className="p-1">
+                  <Menu.Item>
+                    {({ active }) => (
+                      <Link
+                        href="/profile"
+                        className={`block w-full rounded-md px-3 py-2 text-left text-sm ${
+                          active ? "bg-white/5 text-white" : "text-zinc-300"
+                        }`}
+                      >
+                        Profile
+                      </Link>
+                    )}
+                  </Menu.Item>
+                  <Menu.Item>
+                    {({ active }) => (
+                      <Link
+                        href="/profile/trades"
+                        className={`block w-full rounded-md px-3 py-2 text-left text-sm ${
+                          active ? "bg-white/5 text-white" : "text-zinc-300"
+                        }`}
+                      >
+                        Trades
+                      </Link>
+                    )}
+                  </Menu.Item>
+                </div>
+                <div className="p-1">
+                  <Menu.Item>
+                    {({ active }) => (
+                      <button
+                        type="button"
+                        onClick={() => void handleSignOut()}
+                        className={`block w-full rounded-md px-3 py-2 text-left text-sm ${
+                          active ? "bg-red-500/20 text-red-300" : "text-red-400"
+                        }`}
+                        disabled={isSigningOut}
+                      >
+                        {isSigningOut ? "Signing out..." : "Sign out"}
+                      </button>
+                    )}
+                  </Menu.Item>
+                </div>
+              </Menu.Items>
+            </Transition>
+          </Menu>
         </div>
       </div>
     </header>
